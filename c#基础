@@ -29,3 +29,16 @@ Dictionary：1、类型安全，对值类型没有装箱拆箱操作；
 2、在单条数据的读取上速度快；
 3、数据的存放是有序的
 Hashtable：线程安全，适合多线程，无序；
+
+简述StringBuilder和String的区别？
+string是字符串常量
+stringBuffer是字符串常量，线程安全
+stringBuilder是字符串变量，线程不安全
+
+string类型是不可变的对象，当每次对string进行改变时都需要生成一个新的string对象，
+然后将指针指向一个新的对象，如果在一个循环里面，不断改变一个对象，就要不断的生成新的对象，
+所以效率很低。建议不断更改string对象的地方不要使用string类型。
+stringBuilder对象是对象在做字符串连接操作时在原来的字符串上进行修改，改善了性能。连接操作
+频繁是，使用stringBuilder对象。
+
+
