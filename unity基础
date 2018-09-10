@@ -1,16 +1,51 @@
-1.如何优化内存？
+
+1）什么是协同程序？
+
+主线程运行时同时开启一段逻辑处理，来协助当前程序的执行。换而言之，开启协程就是开启一个可以与程序并行的逻辑。可以控制运动，序列和对象的行为。
+
+
+
+2）Unity中物体发生碰撞的条件：
+
+两个物体都必须带有碰撞器Collider,其中一个物体还必须带有RigidBody刚体。
+
+
+3）Unity中碰撞器和触发器的区别？
+
+碰撞器是触发器的载体，而触发器只是碰撞其的一个属性。
+
+当Is Trigger=false时，碰撞器根据物理引擎引发碰撞，产生碰撞的效果，可以调用OnCollisionEnter/Stay/Exit函数；
+当Is Trigger=true时，碰撞器被物理引擎所忽略，没有碰撞效果，可以调用OnTriggerEnter/Stay/Exit函数。
+如果既要检测到物体的接触又不想让碰撞检测影响物体移动或要检测一个物件是否经过空间中的某个区域这时就可以用到触发器
+
+4）OnEnable、Awake、Start运行时的发生顺序？哪些可能在同一个对象周期中反复的发生？
+
+Awake–>OnEnable->Start OnEnable在同一周期中可以反复地发生!
+
+5）Update(),Awake(),Start()的执行顺序是？游戏开始后，分别在何时执行？
+
+脚本自带函数执行顺序如下：将下面脚本挂在任意的物体运行即可看到。
+
+Awake:用于在游戏开始之前初始化变量或者游戏状态。在脚本整个生命周期内它仅被调用一次，Awake()在所有对象呗初始化之后调用，所以可以安全的和其他对象对话或者用如GameObject.FindWithTag()这样的函数搜索他们。每个游戏物体上的Awake()以随机的顺序被调用。因此，使用Awake()来设置脚本间的引用，并且利用start来传递信息Awake总是在Start之前被调用。不能用来执行协同程序。
+
+Start():仅仅在Update()第一次被调用前调用。Start()在behaviour的生命周期中被调用一次。他和Awake（）的不同在于 Start()只是在脚本实例被启用是调用/因此，可以按需调整延迟初始化代码。
+Awake()总是在Start之前被执行，这允许协调初始化顺序。在所有脚本呢实例之中，Start()总是在Awake()之后被调用。
+
+
+Update:正常帧更新，用于更新逻辑。每一帧都执行，处理RigidBody时，需要使用FixedUpdate代替Update.例如：给刚体加一个作用力，必须用作用力在FixedUdate里的固定帧，而不是Update中的帧。两者帧长不同，FixedUpdate，每固定帧绘制时执行一次，和Update不同的是FixedUpdate是渲染执行。，如果你的渲染效率低下的时候FixedUpdate调用次数就会跟着下降。FixedUpdate比较适用于物理引擎的计算，因为是跟每帧渲染有关。Update就比较适合做控制。
+
+
+6）如何优化内存？
 有很多方式，比如:
-1)压缩自带类库
-2)将暂时不用的以后还需要适应的物体隐藏起来而不是直接Destory
-3)释放AssertBundle占用的资源
-4)降低摩西你给的片面数，降低模型的谷歌数量，降低贴图的大小
-5）使用光照贴图，使用多层次细节【LOD】，使用着色器【Shader】，使用预设【Prefab】
+1。压缩自带类库
+2。将暂时不用的以后还需要适应的物体隐藏起来而不是直接Destory
+3。释放AssertBundle占用的资源
+4。降低摩西你给的片面数，降低模型的谷歌数量，降低贴图的大小
+5。使用光照贴图，使用多层次细节【LOD】，使用着色器【Shader】，使用预设【Prefab】
 
-2。使用Unity3D实现2d游戏的方式？
-1）使用本省的GUI，在Unity4.6后出现的UGUI
-2）把摄像机的Projection【投影】值调整为Orthographic【正交投影】，不考虑Z轴
-3）使用2d插件，如2DTookit,NGUI
-
-
+7）使用Unity3D实现2d游戏的方式？
+1。使用本省的GUI，在Unity4.6后出现的UGUI
+2。把摄像机的Projection【投影】值调整为Orthographic【正交投影】，不考虑Z轴
+3。使用2d插件，如2DTookit,NGUI
 
 
