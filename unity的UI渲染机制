@@ -1,0 +1,39 @@
+. Canvas[画布]是一个控制一组被渲染UI元素的组件,  所有的UI元素必须是Canvas的子物体,  同一个
+   场景中允许存在多个Canvas,  但是使用UI元素必须少有一个可用的 Canvas组件。如果场景中没有
+   Canvas，  创建一个UI元素，  新的Canvas组件就会被创建， 该UI元素会附加为 Canvas的子物体.
+
+2. 每一个Canvas都有一些可选的Render Modes (渲染模式),  
+    Screen Space - Overlay 是最常见的渲染模式, 也是Canvas默认的渲染模式
+    Screen space - Overlay 被选中时，  UI会覆盖整个场景 所有的UI元素会在场景最上层渲染输出
+    在这个模式下 UI 会自动填充整个场景.  同时也会随着场景视图大小变化而变化。
+    值得注意的是 Canvas 会影响Rect Transform组件,  整个 Rect Transform 不可编辑。
+    Canvas会修改Rect Transform 的数值来自动填充整个屏幕。
+    在这个模式下有个 Pixel Perfect 选项      Pixel Perfect 选中后， UI元素渲染输出时，  会自动吸附
+    到最近的像素点。在某些情况下会增强UI的展示效果。
+
+    Screen Space - Camera 和 Screen Space - Overlay 十分相似,  只不过它是由场景中指定的摄像
+    机渲染输出。这会使Camera相关的设定作用于UI元素上。最常使用的场景是使用透明摄像机对UI进行
+    渲染输出,  得到景深的效果。 
+    在这个模式下 Canvas 会自动填充相机输出视图,  并且根据摄像机输出视图变化而变化,  在这个模式下
+    Canvas 组件同样会影响 Rect Transform，  这个模式下有几个选项，  包括Pixel Perfect，作用与
+    Screen Space - Overlay 相同。Render Camera 用来设置用于渲染这个 Canvas上UI 元素的摄像机.
+    如果被设置为None,  Canvas 就会选择 Screen Space - Overlay 的设置来渲染这个 Canvas， 
+    当 Screen Space - Camera 选中且富于摄像机对象时。 UI 会被移至相机的视椎体中，  并改变自身
+    大小适应填充。这使得UI能够根据场景视图中游戏对象进行渲染。 为了控制场景中UI元素坐标位置，
+    使用Plane Distance 向远或靠近相机,   这时 Canvas 和 UI 会根据与相机的距离自动改变大小，适应
+    视椎体。 值得注意的是 Plane Distance 的数值应在相机渲染范围内，  当使用 Screen Space - Camera
+    Canvas可以被场景中任意摄像机渲染，  为了使Canvas 及其内容与场景中其他 Canvas 区分隔离开，
+    可以通过设置摄像机的 Clear Flag Culling Mask Depth 属性
+
+    World Space 渲染模式在世界坐标系下渲染UI，  UI元素可以是场景中静态的对象 也可以是动态的对象
+    例如对话框， 标签等在场景中跟随游戏对象运动,  首先要了解的是在 World Space 渲染模式下 Canvas
+    不再影响 Rect Transform , Canvas 可以位于世界坐标系下任意位置,  明白同一场景下允许多个Canvas
+    后， 给世界空间坐标系的UI元素创建Canvas的做法就十分常见了。
+    Event Camera 是接收事件必须具备的，  确定哪个摄像机来检测例如UI上点击等事件,  大多数情况下， 当
+    World Space 选中时，Event Camera 会是当前渲染场景的摄像机.   Receives Events 选项设置这个
+    Canvas 中的UI元素是否接收事件  比如点击或悬停。  禁用这个选项则该 Canvas 下的所有子UI元素都将
+    忽略事件检测,  Sorting Layer 和 Order Inlayer 用于控制场景中 Canvas 之间渲染的顺序
+    Sorting Layer 和 Order InLayer 在 Canvas 中可以进行设置 包含 World Space Screen Space
+
+3. Canvas 中UI元素会以自顶向下的方式进行渲染，  第一个对象会渲染在底层  ，  改变UI元素渲染的顺序，
+    只需简单的改变UI元素在Hierarchy 面板的顺序
