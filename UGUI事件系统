@@ -1,0 +1,67 @@
+Unity UGUI的可触发事件系统：
+
+PointerEnter:  
+PointerExit:
+PointerDown:
+PointUp:
+PointClick:
+Drag:
+Drop:
+Scroll:
+UpdateSelected:
+Select:
+Deselect:
+Move:
+
+(1)继承基础接口实现：
+
+创建ClickObject脚本，继承MonoBehaviour和PointerClickHander
+
+public ClickObject : MonoBehaviour,IPointerClickHandelr{
+
+void Start(){
+
+}
+
+void Update(){
+
+}
+
+public void OnPointerClick(PointerEventData eventData){
+  Debug.Log("click");
+}
+
+}
+
+2)实现public void OnPointerClick(PointerEventData eventData)
+3)创建名为 Panel_IPointer的空白对象，并且把ClickObject脚本挂在对象上
+4）启动。点击Panel_IPointer对象，Console输出   
+
+
+
+(2)Unity3D编辑器操作设置实现：
+Button提供OnClick操作，实现事件
+
+(3)
+
+步骤一：创建c#脚本，添加OnTestClick()
+步骤二：创建Empty对象，接受和响应点击事件，创建名为Panel的UI对象，于触发点击事件。
+步骤三：Panel对象添加EventTrigger组件，" Add New" -> 选择" PointerClick"。
+将Empty对象拖拽到触发者位置。然后点击"No Function"选择我们写在Test脚本中的OnTestClick事件。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
