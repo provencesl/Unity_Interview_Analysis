@@ -1,0 +1,27 @@
+EventManager事件管理器：
+
+主要函数：添加监听，移除监听，调度事件
+主要变量：事件list,事件结构，回调委托
+
+查阅：https://blog.csdn.net/wanzhihui0000/article/details/52839631
+
+基于订阅者模式事件机制：
+
+查阅：http://www.newbieol.com/information/1048.html
+
+打造个人EventSystem:
+
+查阅:https://www.jianshu.com/p/bf82beb41f7f
+
+
+http://www.cnblogs.com/RainPaint/p/10124051.html
+
+
+
+
+public class EventManager : MonoBehaviour{
+
+private Dictionary<string,UnityEvent> eventDictionary;
+
+
+}
