@@ -7,7 +7,6 @@ c#语言本身具有一个事件管理器event delegate，为何需要自己建�
 EventManager事件管理器：
 
 
-
 主要函数：添加监听，移除监听，调度事件
 主要变量：事件list,事件结构，回调委托
 
@@ -24,12 +23,32 @@ EventManager事件管理器：
 
 http://www.cnblogs.com/RainPaint/p/10124051.html
 
+查阅：http://www.mamicode.com/info-detail-389870.html  得到事件相关
 
+查阅得到事件节点之间关系： https://blog.csdn.net/u013108312/article/details/52351826
+
+
+根据 立钻的 框架可以得到启发： https://blog.csdn.net/VRunSoftYanlz/article/details/80862879
+
+MyEvent:事件类型：
+
+public class MyEvent{
+
+private EventType type;
+private string content;
+
+}
+
+public enum EventType{
+
+EVENT_0 = "UI"；
+//。。。。
+}
 
 
 public class EventManager : MonoBehaviour{
 
-private Dictionary<string,UnityEvent> eventDictionary;
+private Dictionary<string,UnityEvent> eventDictionary; //字典  
 
 
 }
