@@ -1,0 +1,31 @@
+向函数传参：
+
+void  Start(){
+Print("xxx");
+}
+
+void Print(string name){
+base.print(name);
+}
+
+传统的传递参数的方式
+
+c#委托的方便在于只需要告诉某个函数的名称就可以实现调用。
+
+委托其实 实质就是  事件和Observer观察者模式
+
+class X
+{
+  delegate void Helper();
+  
+  void A()
+  {
+    Print("A");
+  }
+  
+  void B()
+  {
+    Print();
+  }
+
+}
