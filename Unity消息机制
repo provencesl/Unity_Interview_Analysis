@@ -1,0 +1,131 @@
+开发Unity阶段，大多数采用消息机制。
+
+通过消息触发的事件：即为完成某个任务之后触发其他事件的发生，即为消息事件。
+
+消息事件的实现过程：增加消息监听，分发消息处理。
+
+现在封装消息系统吧：
+
+1)首先，封装消息事件的基类： BaseEvent:
+
+public enum EventType
+{
+    GAME_OVER，
+    GAME_WIN，
+    PAUSE，
+    GAME_DATA，
+}
+
+public class BaseEvent
+{
+  protected HashTable params;
+  protected EventType type;
+  protected object sender;
+  protected string eventName;
+  
+  
+  
+
+
+}
+
+
+封装对外使用的消息接口：
+
+public class EventDispatcher
+{
+  static EventDispatcher instance;
+  public static EventDispatcher GetInstance()
+  {
+    if(instance == null)      
+    {
+      instance = new EventDispatcher();
+      
+    }
+    return instance;
+  }
+
+private Hashtable listeners = new Hashtable();
+
+
+public void AddEventListener(EventType eventType,EventListenerDelegate listener)
+{
+  EventListenerDelegate eventListenerDelegate = this.listeners[eventType] as EventListenerDelegate;
+  eventListenerDelegate = (EventListenerDelegate)Delegate.CVombine(eventListenerDelegate,listener);
+  this.listeners[eventType] = eventListenerDelegate;
+  
+}
+
+public void RemoveEventListener(EventType ventType,EventListenerDelegate listener)
+{
+  EventListenerDelegate eventListenerDelegate = this.listeners[eventType] as EventListenerDelegate;
+  if(eventListenerDelegate != null)
+  {
+    //combine等于委托  + 
+    eventListenerDelegate = (EventListenerDelegate)Delegate.Combine(eventListenerDelegate,listener);
+    this.listeners[eventType] = eventListenerDelegate;
+  }
+  
+  
+  //使用枚举传递
+  public void DispatchEvent(BaseEvent event)
+  {
+    EventListener eventListenerDelegate = this.listeners[event.Type] as EventListenerDelegate;
+      if(eventListenerDelegate ! = null)
+      {
+        try
+        {
+          eventListenerDelegate(event);
+        }
+        catch(Exception e)
+        {
+          throw new Exception(string.Concat(new string[]
+          {
+            "Error dispatching event",
+            event.Type.ToString(),
+            ":",
+            e.Message,
+            "",
+            e.StackTrace
+            }),e);
+          }
+          
+        }
+      
+      }
+  }
+  
+  
+  public void DispatchStringEvent(BaseEvent event)
+  {
+     EventListenerDelegate eventListenerDelegate = this.listeners[event.EventName] as EventListenerDelegate;
+     if(eventListenerDelegate != null)
+     {
+        try
+        {
+          eventListenerDelegate(event);
+        }
+        catch(Exception e)
+        {
+          throw new Exception(string.Concat)
+        }
+        
+     }
+     
+     
+  }  
+  
+  
+}
+
+
+
+  
+
+
+
+
+
+
+
+}
