@@ -1,0 +1,61 @@
+Unity中的渲染顺序自上而下大致分为三层。 分别是Camera - > Sorting Layer - > Sorting order
+最高层为Camera层，可以在Camera的depth那里设置，设置之后，图形的渲染顺序就是先绘制depth低的相机下的物体，
+再绘制depth高的相机下的物体，也就是说，depth高的相机会覆盖depth低的相机（具体的覆盖关系有don't clear， solid color等等几种）
+
+
+UGUI渲染模式：Canvas -- Render Mode:ScreenSpace-Overlay
+
+此模式下不依赖摄像机Camera的渲染
+
+Hierachy下存在各层级遮挡，
+
+
+
+
+①不同Camera的Depth。（大在前，小在后）
+②同Camera的SortingLayer。（下在前，上在后）
+③同SortingLayer下的Order in Layer。（大在前，小在后）
+④同Order in Layer下的Z轴。（小在前，大在后）
+ 
+改变控件之间的层级关系
+ (1)同一canvas下：
+     改变控件transform的SiblingIndex,
+     transform.GetSiblingIndex();
+     transform.SetSiblingIndex(int index); //index值越大，越后渲染，层级越大，越显示在前面
+
+ (2)不同Canvas下：
+    设置Canvas下的Sort Order //Sort Order值越大，越后渲染，层级越大，越显示在前面
+渲染顺序与hierarchy面板里物体的摆放顺序也有关
+面板里越靠上的物体越先被渲染，越后被渲染的显示在越前面。
+ 
+
+注意：
+
+如果是多个Canvas的渲染先后顺序 http://blog.csdn.net/huutu/article/details/43636241
+调Canvas下面有一个Sort Order值，默认为0，越大越在后面。
+ 
+创建任意UGUI元素时自动生成一个Canvas物体，Canvas下的所有物体从上往下渲染，即排在下面的会遮盖排上面的。同理，子元素会覆盖父元素。
+
+在游戏运行中如何修改UGUI的显示层级？
+在代码中调整该元素的层级位：使用RectTransform类的函数。
+
+    SetAsFirstSibling：移动到所有兄弟节点的第一个位置（Hierarchy同级最上面，先渲染，显示在最下面）
+    SetAsLastSibling：移动到所有兄弟节点的最后一个位置（Hierarchy同级最下面，后渲染，显示在最上面）
+    GetSiblingIndex：获得该元素在当前兄弟节点层级的位置
+    SetSiblingIndex：设置该元素在当前兄弟节点层级的位置
+
+
+
+
+Canvas的渲染模式【Render Mode】：ScreenSpace Overlay,ScreenSpace Camera,World Space
+ScreenSpace-Overlay:
+1.OverLay模式，永远覆盖在其他物体之上。出现在最上面。不受摄像机的Depth值影响
+2.有多个摄像机时，由摄像机的Depth值决定
+3.只有一个摄像机时，由距离和方向决定World模式和Camera模式、它们的渲染结果 可前、可后、可穿插。
+ScreenSpace-Camera:
+1.遵循刷油漆规则
+2.依次由Render Camera的Depth值、Sorting  Layer先后顺序、Order in Layer值决定 
+Render Camera不同时，由Render Camera的Depth决定
+Render Camera相同时，由Sorting Layer先后顺序决定
+Render Camera相同时，Sorting Layer相同，由Order in Layer值决定。
+
