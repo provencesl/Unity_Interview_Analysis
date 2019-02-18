@@ -1,0 +1,25 @@
+工作中协程的作用大多为两点：
+1）延时（等待）一段时间执行代码
+2）等某个操作完成之后再执行后面的代码。总结起来就是一句话：控制代码在特定的时机执行。
+
+很多初学者，都会下意识地觉得协程是异步执行的，都会觉得协程是C# 线程的替代品，是Unity不使用线程的解决方案。
+
+所以首先，请你牢记：协程不是线程，也不是异步执行的。
+协程和 MonoBehaviour 的 Update函数一样也是在MainThread中执行的。
+使用协程你不用考虑同步和锁的问题。
+
+Unity协程执行原理：
+ UnityGems.com给出了协程的定义：
+  A coroutine is a function that is executed partially and, presuming suitable conditions are met, will be resumed at some point in the future until its work is done.
+  即协程是一个分部执行，遇到条件（yield return 语句）会挂起，直到条件满足才会被唤醒继续执行后面的代码。
+  
+Unity在每一帧（Frame）都会去处理对象上的协程。Unity主要是在Update后去处理协程（检查协程的条件是否满足），但也有写特例：
+
+协程和Update其实一样，都是对Unity的每一帧进行处理的函数【如果有的话】
+
+如果MonoBehaviour 是处于激活（active）状态的而且yield的条件满足，就会协程方法的后面代码。还可以发现：如果在一个对象的前期调用协程，协程会立即运行到第一个 yield return 语句处，如果是 yield return null ，就会在同一帧再次被唤醒。如果没有考虑这个细节就会出现一些奇怪的问题『1』。
+结论都是从UnityGems.com 上得来的，经过下面的验证发现与实际不符，D.S.Qiu用的是Unity 4.3.4f1 进行测试的。经过测试验证，协程至少是每帧的LateUpdate()后去运行。
+
+MonoBehaviour.enabled = false 协程会照常运行，但 gameObject.SetActive(false) 后协程却全部停止
+
+参考：https://dsqiu.iteye.com/blog/2029701
