@@ -1,0 +1,82 @@
+yield的返回值：
+
+yield返回如果是空，【c#是yield return null】,coroutine会被终止。
+控制权交回调用的位置，就像coroutine结束了一样——事实上它还处于活动状态。 
+下一帧 coroutine会自动在yield的位置执行，直到Coroutine结束为止。
+
+yield返回值非空：
+
+ 常见的有：
+yield return new WaitForEndOfFrame();//等到该帧结束 
+yield return new WaitforSeconds(xxx);//等xxx秒
+yield return new WaitForFixedUpdate();//等物理帧结束 
+yield return www;//这里www是一个WWW对象
+--------------------- 
+
+总提来说，只要返回的值非空，yield 语句的作用就是让coroutine在这里暂停，主线程继续，直到yield的条件得到满足，再继续执行yield后面的代码。
+
+有了这个认识，其实上面的四种情况都是一样的。
+前三个分别是等到该帧结束、等xxx秒、等物理帧结束，其实都是满足了 new WaitForXXX的这个条件。而最后一个www，则是等www加载完成，也就是www可以访问了，条件满足了。
+
+另外需要注意的是，每个开启的coroutine会在堆中分配一个对象，并且会一直存在直到结尾。在周期性的函数中(例如Update，FixedUpdate, LateUpdate)开启coroutine一定要警惕，因为你可能会平行运行数以千计的coroutine，占据大量内存空间。帧率会直降，Unity也可能会因为CPU和内存负荷而崩溃掉。通常这种情况下可以用一个布尔变量来避免灾难发生。
+--------------------- 
+
+
+一个协程的执行可以在任何地方用yield语句来暂停，yield return的值决定了什么时候协程恢复执行。
+协程在协调在几帧中执行的操作时有极大的用处.协程几乎没有任何性能开销。
+StartCoroutine一般都会立即返回，然而你也可以获得返回结果的值。但是这一步会等到协程结束执行才能生效。
+
+
+public class MainTest : MonoBehaviour{
+
+  void Start(){
+    Debug.Log("start");
+    StartCroutine(Test());
+    Debug.Log("start2");
+  }
+  
+  IEnumerator Test(){
+    Debug.Log("test1");
+    yield return null;
+    Debug.Log("test");
+  }
+
+}
+运行结果： 
+start1   test1   start2   test2
+
+
+这下就一目了然了，当StartCoroutine刚调用的时候，可以理解为正常的函数调用，然后接着看调用的函数里面。
+
+当被调用函数执行到yield return null；（暂停协程，等待下一帧继续执行）时，根据Unity解释协同程序就会被暂停，
+其实我个人认为他这个解释不够精确，先返回开始协程的地方，然后再暂停协程。也就是先通知调用处，“你先走吧，不用管我”，然后再暂停协程。。
+
+public class MainTets : Monobehaviour{
+
+  void Start(){
+    Debug.Log("start1");
+    StartCoroutine(Test());
+    Debug.Log("start2");
+  }
+  
+  IEnumerator Test(){
+    Debug.Log("test1");
+    yield return new WaitForSeconds(3);
+    Debug.Log("test2");
+  }
+  
+}
+
+执行结果： 
+start1 test1 start2  test2 [等待3s才打印出来]
+
+验证了“yield return的值决定了什么时候协程恢复执行”这句。
+协程->协同程序->其实就是协同两个任务，
+
+
+
+
+
+
+
+
