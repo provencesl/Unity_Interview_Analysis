@@ -1,0 +1,15 @@
+FixedUpdate () 和 Update () ：
+
+Monobehaviour激活后，在每一帧被调用，实现更新。
+
+Update()每一帧的时间不固定，即第一帧与第二帧的时间t1和第三帧与第四帧的时间t2不一定相同。FixedUpdate()每帧与每帧之间相差的时间是固定的.
+
+FixUpdate是按照帧进行更新的。
+
+通常
+FixedUpdate()
+{
+  i++;
+  time += Time.deltaTime;
+  Debug.Log(“这是第”);
+}
