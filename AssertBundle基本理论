@@ -28,6 +28,39 @@ public static AssetBundleManifest BuildAssetBundles
 AssertBundle功能开发好后，怎么用呢？？？
 
 
+AssertBundle需要对资源进行分组：
+1）按逻辑实体进行分组：
+一个UI界面或者所有UI界面一个包（这个界面里面的贴图和布局信息一个包）
+一个角色或者所有角色一个包（这个角色里面的模型和动画一个包）
+所有的场景所共享的部分一个包（包括贴图和模型）
+
+2)按资源类型分组：
+  所有声音资源打成一个包
+  所有shader打成一个包
+  所有模型打成一个包
+  所有材质打成一个包
+3）按照使用分组：
+  把需要同时加载的资源或者某一时间内使用的所有资源打成一个包。
+  可以按照关卡分，一个关卡所需要的所有资源包括角色、贴图、声音等打成一个包。
+  也可以按照场景分，一个场景所需要的资源一个包。
+  
+解包：
+
+IEnumerator LoadBundle(string url)
+{
+  WWW www = new WWW(url);
+  yield return www;
+  
+  if(www.error != null)
+  {
+    Debug.LogError();
+    yield break;
+  }
+}
+
+
+
+
 
 https://blog.csdn.net/puss0/article/details/79690523
 
