@@ -1,0 +1,12 @@
+目的：
+1）便于增量更新功能的实现
+2）降低安装包大小，unity不支持过滤到Resources目录下的不用的文件
+3）用AB包加快资源文件读取速度
+
+生成AssertBundle文件的基本流程：
+1）所有需要打包成为AB包的资源放到BundleResources目录下，按照一定规则存放
+2）便利BundleResources目录，。根据一定规则，给不同的文件或者目录孵育一个AssertLabels
+3)打包，输出目录为StreamingAsserts
+4）打包，遍历后生成的manifest信息，获取每个AB包的包名，根据依赖的AB包的HASH值，输出到一个JSON文件
+
+https://blog.csdn.net/niuzb/article/details/52848398
