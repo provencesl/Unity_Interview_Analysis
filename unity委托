@@ -1,0 +1,81 @@
+Unity中事件和委托大多数时候和事件相关。
+
+比如：当前需要设计一款计时器（Timer）功能，拥有基础事件：开始计时、暂停计时，停止计时【计时器事件】
+
+
+using UnityEngine;
+using System.Collections;
+/// <summary>
+///计时器 
+/// </summary>
+public class Timer : MonoBehaviour {
+	public delegate void MyEventHandler(float currentTime);
+	#region 计时器的三种基础事件
+ 
+	public static event MyEventHandler onTimerStart;
+	public static event MyEventHandler onTimerPause;
+	public static event MyEventHandler onTimerStoped;
+ 
+	#endregion
+	private bool isStarted=false;
+	public bool IsStarted{
+		get{ 
+			return isStarted;
+		}
+	}
+	private bool isStoped = true;
+	public bool IsStoped{
+		get{ 
+			return isStoped;
+		}
+	}
+	private float totalTime = 0;
+	// Update is called once per frame
+	void Update () {
+ 
+		//空格键当作“开始/暂停”键
+		if (Input.GetKeyDown (KeyCode.Space)) {
+			OnChangeState ();
+		}
+		//回车键当作“停止”键
+		if (Input.GetKeyDown (KeyCode.Return)) {
+			OnSetStop ();
+		}
+ 
+		if (isStarted) {
+			isStoped = false;
+			totalTime += Time.deltaTime;
+		}
+	}
+	void OnChangeState(){
+		var _startState = !isStarted;
+		isStarted = _startState;
+		if (isStarted) {
+			//检查onTimerStart是否为空，防止报空 （废话了。。。下面不做赘述）
+			if (onTimerStart != null) {
+				onTimerStart (totalTime);
+			} else {
+				Debug.Log ("onTimerStart is Empty");
+			}
+		} else {
+			if (onTimerPause != null) {
+				onTimerPause (totalTime);
+			} else {
+				Debug.Log ("onTimerPause is Empty");
+			}
+		}
+	}
+	void OnSetStop(){
+		if (onTimerStoped != null) {
+			onTimerStoped (totalTime);
+		} else {
+			Debug.Log ("onTimerStoped is Empty");
+		}
+		isStarted = false;
+		isStoped = true;
+		totalTime = 0;
+	}
+}
+
+
+https://blog.csdn.net/GhostOrange/article/details/53150383
