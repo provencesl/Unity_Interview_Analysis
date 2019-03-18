@@ -1,0 +1,300 @@
+引入事件机制，其实本质就是观察者模式， 事件本质又是方法的委托 （Delegate），把回调方法委托到事件管理器，
+当条件达到，通过事件key来告诉时间管理器可以执行的委托方法。
+
+ 
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+ 
+public interface IMessage
+{
+    /// <summary>
+    /// 事件类型，Key
+    /// </summary>
+    int Type { get; set; }
+ 
+    /// <summary>
+    /// 发送者
+    /// </summary>
+    System.Object Sender { get; set; }
+ 
+    /// <summary>
+    /// 参数
+    /// </summary>
+    System.Object[] Params { get; set; }
+ 
+    /// <summary>
+    /// 转字符串
+    /// </summary>
+    /// <returns></returns>
+    string ToString();
+}
+
+
+为什么实验int类型而非string类型作为消息的key??
+
+接口IMessage的实现Message:
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+ 
+public class Message : IMessage {
+    public int Type { get; set; }
+ 
+    public System.Object[] Params { get; set; }
+ 
+    public System.Object Sender { get; set; }
+ 
+    public override string ToString()
+    {
+        string arg = null;
+        if (Params != null)
+        {
+            for (int i = 0; i < Params.Length; i++)
+            {
+                if ((Params.Length > 1 && Params.Length - 1 == i) || Params.Length == 1)
+                {
+                    arg += Params[i];
+                }
+                else
+                {
+                    arg += Params[i] + " , ";
+                }
+            }
+        }
+ 
+        return Type + " [ " + ((Sender == null) ? "null" : Sender.ToString()) + " ] " + " [ " + ((arg == null) ? "null" : arg.ToString()) + " ] ";
+    }
+ 
+    public Message Clone()
+    {
+        return new Message(Type, Params, Sender);
+    }
+ 
+    public Message(int type)
+    {
+        Type = type;
+    }
+ 
+    public Message(int type, params System.Object[] param)
+    {
+        Type = type;
+        Params = param;
+    }
+ 
+    public Message(int type, System.Object sender, params System.Object[] param)
+    {
+        Type = type;
+        Params = param;
+        Sender = sender;
+    }
+}
+
+
+定义消息类型：
+
+/// <summary>
+/// 消息的类型  
+/// </summary>
+public enum MessageType
+{
+    /// <summary>
+    /// 启动
+    /// </summary>
+    START_UP = 1000,
+    /// <summary>
+    /// 解压
+    /// </summary>
+    UNPACK,
+    /// <summary>
+    /// 更新
+    /// </summary>
+    UPDATE,
+    /// <summary>
+    /// 更新完成
+    /// </summary>
+    UPDATE_COMPLETE,
+}
+ 
+ 
+/// <summary>
+/// 战斗的类型
+/// </summary>
+public enum BattleEvent
+{
+    /// <summary>
+    /// 攻击
+    /// </summary>
+    Attack = 10000,
+}
+ 
+/// <summary>
+/// 协议的类型
+/// </summary>
+public enum ProtocolEvent
+{
+ 
+}
+
+
+消息派发接口：IDispatcher:
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+ 
+public interface IDispatcher
+{
+    void AddListener(int type, EventListenerDelegate listener);
+ 
+    void RemoveListener(int type, EventListenerDelegate listener);
+ 
+    void SendMessage(Message evt);
+ 
+    void SendMessage(int type, params System.Object[] param);
+ 
+    void Clear();
+}
+
+
+
+//接口的IDispatcher的实现Dispatcher:
+
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+ 
+ 
+public delegate void EventListenerDelegate(Message evt);
+ 
+public class Dispatcher : Singleton<Dispatcher>, IDispatcher
+{
+    
+    private Dictionary<int, EventListenerDelegate> events = new Dictionary<int, EventListenerDelegate>();
+ 
+    public void AddListener(int type, EventListenerDelegate listener)
+    {
+        if (listener == null)
+        {
+            XMDebug.LogError("AddListener: listener不能为空");
+            return;
+        }
+ 
+        EventListenerDelegate myListener = null;
+        events.TryGetValue(type, out myListener);
+        events[type] = (EventListenerDelegate)Delegate.Combine(myListener, listener);
+    }
+ 
+ 
+    public void RemoveListener(int type, EventListenerDelegate listener)
+    {
+        if (listener == null)
+        {
+            XMDebug.LogError("RemoveListener: listener不能为空");
+            return;
+        }
+ 
+        events[type] = (EventListenerDelegate)Delegate.Remove(events[type], listener);
+    }
+ 
+    public void Clear()
+    {
+        events.Clear();
+    }
+ 
+    public void SendMessage(Message evt)
+    {
+        EventListenerDelegate listenerDelegate;
+        if (events.TryGetValue(evt.Type, out listenerDelegate))
+        {
+            try
+            {
+                if (listenerDelegate != null)
+                {
+                    listenerDelegate(evt);
+                }
+            }
+            catch (System.Exception e)
+            {
+                XMDebug.LogError("SendMessage:", evt.Type.ToString(), e.Message, e.StackTrace, e);
+            }
+        }
+    }
+ 
+    public void SendMessage(int type, params System.Object[] param)
+    {
+        EventListenerDelegate listenerDelegate;
+        if (events.TryGetValue(type, out listenerDelegate))
+        {
+            Message evt = new Message(type, param);
+            try
+            {
+                if (listenerDelegate != null)
+                {
+                    listenerDelegate(evt);
+                }
+            }
+            catch (System.Exception e)
+            {
+                XMDebug.LogError("SendMessage:", evt.Type.ToString(), e.Message, e.StackTrace, e);
+            }
+        }
+    }
+ 
+ 
+    public void AddListener(MessageType type, EventListenerDelegate listener)
+    {
+        AddListener((int)type, listener);
+    }
+ 
+    public void AddListener(BattleEvent type, EventListenerDelegate listener)
+    {
+        AddListener((int)type, listener);
+    }
+ 
+    public void AddListener(ProtocolEvent type, EventListenerDelegate listener)
+    {
+        AddListener((int)type, listener);
+    }
+ 
+    public void RemoveListener(MessageType type, EventListenerDelegate listener)
+    {
+        RemoveListener((int)type, listener);
+    }
+ 
+    public void RemoveListener(BattleEvent type, EventListenerDelegate listener)
+    {
+        RemoveListener((int)type, listener);
+    }
+ 
+    public void RemoveListener(ProtocolEvent type, EventListenerDelegate listener)
+    {
+        RemoveListener((int)type, listener);
+    }
+ 
+    public void SendMessage(MessageType type, params System.Object[] param)
+    {
+        SendMessage((int)type, param);
+    }
+ 
+    public void SendMessage(BattleEvent type, params System.Object[] param)
+    {
+        SendMessage((int)type, param);
+    }
+ 
+    public void SendMessage(ProtocolEvent type, params System.Object[] param)
+    {
+        SendMessage((int)type, param);
+    }
+}
+
+
+
+
+
+
+
+
+
+
