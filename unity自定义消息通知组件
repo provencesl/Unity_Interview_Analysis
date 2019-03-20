@@ -1,0 +1,16 @@
+客户端消息机制是十分广泛的。
+
+using System;
+public class Notification
+{
+  public Enum Type{set;get;}
+  
+  public Object[] Params{set;get;}
+  
+  public Object Target{set;get;}
+  
+  public Notification(){}
+}
+
+
+https://www.cnblogs.com/monkeycoder/articles/6860132.html
