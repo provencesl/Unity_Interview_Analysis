@@ -1,0 +1,22 @@
+Awake()在Monobehaviour创建后立刻被调用，Start在MonoBehaviour创建后在该帧
+update前执行。
+
+void Awake()
+{
+  //初始化函数，主要用来创建变量
+  //不可执行协同程序
+}
+
+void Start()
+{
+
+}
+
+Awake方法的调用顺序在object之间时随机的
+当所有对象的Awake方法都调用完成后，才会执行第一个Start方法
+Awake方法就像构造函数一样
+Awake方法不论脚本是否启用，都会调用
+
+
+
+
