@@ -1,0 +1,30 @@
+如果a是公有的序列化变量。
+           （1）如果你想要在面板中看到变量a，那么用：
+                    public int a;
+           （2）如果你不想在面板中看到变量a，那么用：
+                    [HideInInspector]
+                    public int a;
+                    这样a可以在程序中被代码赋值，但不会在面板中看到,也不能手动设置赋值。
+
+
+如果a是私有的序列化变量，你想在面板中读取并赋值，那么用:
+             [SerializeField]
+             private int a;
+
+如果a是私有的序列化变量，你想在面板中读取，但是不赋值，那么用：
+            [HideInInspector][SerializedField]
+            private int a;
+            public int b
+            {
+                get{return a;}
+            }
+            
+            
+ 如果a是私有序列化变量，你不想在面板中做任何操作(不想看到，也不想写)，但是想要在程序中给它赋值，那么用。
+            [HideInInspector][SerializedField]
+            private int a;
+            public int b
+            {
+                get{return a;}
+                set{a = value;}
+            }
