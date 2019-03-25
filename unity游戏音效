@@ -1,0 +1,38 @@
+Unity3D游戏引擎一共支持4个音乐格式的文件：
+
+　　.AIFF  适用于较短的音乐文件可用作游戏打斗音效
+
+　　.WAV  适用于较短的音乐文件可用作游戏打斗音效
+
+　　.MP3  适用于较长的音乐文件可用作游戏背景音乐
+
+　　.OGG  适用于较长的音乐文件可用作游戏背景音乐
+
+ 
+1，游戏音乐：适用较长的音乐，如背景音乐。
+
+2，游戏音效：适用较短的音乐，如游戏出大招的音效。
+
+===========================================
+Unity优化中对游戏性能优化，声音优化非常关键。
+
+
+了解Audio Clips、Audio Listeners、AudioSources的基本操作：
+
+
+AudioClip设置：
+取消Preload Audio Data（预加载音频数据）选项。然后把Override for Android选项勾上，并且设置Load Type为Streaming。
+这样做可以很好的优化游戏音效的占用
+
+
+音频可视化：
+
+https://blog.csdn.net/noEnoughChief/article/details/82984635
+
+public interface IAudio{
+
+}
+
+public class AudioManager{
+
+}
