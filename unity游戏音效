@@ -30,7 +30,8 @@ AudioClip设置：
 https://blog.csdn.net/noEnoughChief/article/details/82984635
 
 public interface IAudio{
-
+AudioSource GetAudioSource();
+void OnPlayVideo(AudioClip clip);
 }
 
 public class AudioManager{
