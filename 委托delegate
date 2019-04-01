@@ -1,0 +1,62 @@
+委托的本质：
+1）声明委托：
+public delegate void MyDelegate(string s);
+2)ILSpy反编译：
+public classauto ansi sealed MyDelegate : MulticastDelegate
+自动生成了类，可见委托是一种数据类型。sealed表明是封闭类，不可继承
+
+
+创建委托变量的本质：
+1）既然=委托是类，并且不是静态类，想要使用，就必须new
+
+public delegate void MyDelegate(string s);
+
+public static void main(string[] args){
+
+MyDelegate delegate = new MyDelegate(MyDelegate_2);  //创建委托变量
+
+MyDelegate_2 delegate2 = MyDelegate_2;
+
+}
+
+static void MyDelegate_2(){
+Console.write(""hhhh);
+}
+
+
+调用委托变量和本质：
+
+1)给委托变量加()即可调用
+
+MyDelegate delegate = new MyDelegate(MyDelegate_2);
+delegate();
+
+
+委托和匿名方法：
+
+如果委托指向的方法知识临时使用，就不需要声明了，直接使用匿名方法。
+
+private delegate void MyDelegateHandler(string name);
+
+private void MyDelegate(string name,MyDelegateHandler mydelegateHandler)
+{
+  mydelegateHandler(name);
+}
+
+MyDelegate delegate = new MyDelegate(delegate(string name){
+  Console.WriteLine();
+});
+
+
+委托好处：
+1）逻辑分离，解除耦合
+2）对修改封闭，对扩展开放
+
+
+
+
+
+
+
+
+
