@@ -8,3 +8,34 @@
 
 Physics
 RaycastHit 光线投射碰撞
+
+
+Unity中用于检测鼠标点在屏幕上提供了一个控制方案。
+具体点在unity三维世界坐标的哪个点。
+通过鼠标点击屏幕，由屏幕点向unity三维直接发射一条射线。
+
+当检测到碰撞物体后，会返回被碰撞物体的所有信息，以及交点信息等等…
+
+射线检测即对一个碰撞器进行检测，如果碰撞到碰撞器，则返回true，否则返回false，这个检测是一条射线，
+这条射线由我们自己设置 。一般在Update函数配合if()来使用。
+
+RaycastHit hit 此为射线碰撞到的物体碰撞器， 
+以out hit传入 当射线碰撞到物体时，返回true，hit则是对应的碰撞物体的碰撞器 
+可以通过hit来找到碰撞到的物体对象信息。
+
+        
+        //1. 射线开始的位置
+        //2. 射线的方向
+        //3. 碰撞信息
+        //4. 射线的最大距离
+        //5. 层级
+Physics.Raycast (transform.position, transform.forward, out hit, 2, _layerMask)
+
+应用的场景之一：
+1）通过射线使得物体移动：
+通过鼠标点击的方法，获取Ray类型对象
+—ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+2)然后根据Ray类型对象做碰撞检测（Plane），得到RaycastHit _hit
+if(Physics.Raycast(_ray,out _hit))
+3)_hit.point就是需要移动的地方，此时我们使用transform.LookAt()看向他，然后设置transform.forward()移动到该点。
+注意参数是vector3.forward而非transform.forward，两者调用区别很大
