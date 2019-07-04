@@ -1,0 +1,33 @@
+一.C#作为以Assembly【汇编集】为基本单元，dll就是一个assembly，dll之间有加载以来顺序
+
+Assets/*.dll
+Stamdard Assets/*.cs            -> Assembly-Csharp-First-Pass.dll
+Assets/*.cs                -> Assembly-Csharp.dll
+Standard Assets/Editor/*.cs   -> Assembly-Csharp-First-pass-editor.dll
+/Editor/*.cs                   -> Assembly-Csharp-Editor.dll
+
+
+
+
+二、脚本编译顺序
+Unity保留了一些项目文件夹名称来标识其内的内容具有一些特殊目的。而其中一些文件夹会影响脚本编译的编译顺序。这些文件夹名称是：
+
+Assets
+Editor
+Editor default resources
+Gizmos
+Plugins
+Resources
+Standard Assets
+StreamingAssets
+
+脚本编译有四个不同的阶段。处于哪个阶段编译由其父目录确定。
+在脚本必须引用其他脚本中定义的类容的情况下，编译的顺序就非常重要了。基本规则是，
+在当前阶段之后编译的任何东西都引用不到，在当前阶段之前或早期的阶段编译的任何内容都可以完全引用。
+
+编译阶段如下：
+
+阶段1：编译Standard Assets、Plugin中的运行时脚本
+阶段2：编译Standard Assets、Plugin中的Editor脚本
+阶段3：编译其他不在Editor目录下的脚本
+阶段4：编译Editor目录下的脚本
