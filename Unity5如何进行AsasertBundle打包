@@ -1,0 +1,12 @@
+开始创建一个AssetBundle，从项目文件夹中选择一个想要的自愿的对象，
+
+在Inspector检查器的底部是AssetBundle菜单，
+
+1）从第一个下拉框中选择或者设置AssetBundles的名称，
+2）第二个下案例框是附加选项。
+
+
+如果资源是第一次打包，请不要设置第二个附加选项，否则打包报错。
+
+默认情况下，AssetBundle名称设置为None,这意味着资源不能进行AssetBundle打包。
+如果还没有定义包，单机new.输入包名。这样可以创建一个或者多个AssetBundle
