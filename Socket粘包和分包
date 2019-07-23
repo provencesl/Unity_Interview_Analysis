@@ -1,0 +1,194 @@
+基于Socket实现TCP通信：
+1）自定义TCP传输协议以及封包
+2）TCP协议一般格式是消息头 + 消息体【忽略对其他层的再次封装】
+消息头和消息体放置的内容：
+只需遵从两个原则：
+1）消息头里面必须有一定的位置来存储消息体的长度
+2）消息头的长度必须固定，协议中必须是固定值
+
+    /// <summary>
+    /// 构建消息数据包
+    /// </summary>
+    /// <param name="MessageBody">消息体</param>
+    /// <param name="sessionid">用户身份认证</param>
+    /// <param name="command">主命令</param>
+    /// <param name="subcommand">子命令</param>
+    /// <param name="encrypt">加密方式</param>
+    /// <returns>返回构造完整的数据包</returns>
+    public static byte[] BuildDataPackage(string MessageBody,long sessionid, int command,int subcommand, int encrypt)
+    {
+        //各个分类数据转换为字节数组
+        byte[] MessageBodyByte = Encoding.UTF8.GetBytes(MessageBody);
+        byte[] sessionidByte = BitConverter.GetBytes(sessionid);
+        byte[] commandByte = BitConverter.GetBytes(command);
+        byte[] subcommandByte = BitConverter.GetBytes(subcommand);
+        byte[] encryptByte = BitConverter.GetBytes(encrypt);
+
+        //总数据包（包头多出4个字节存储数据包长度）
+        byte[] totalByte = new byte[4 + MessageBodyByte.Length
+            + sessionidByte.Length 
+            + commandByte.Length 
+            + subcommandByte.Length 
+            + encryptByte.Length];
+
+        //数据包头部（存储数据包的总长度）
+        BitConverter.GetBytes(totalByte.Length).CopyTo(totalByte,0);
+
+        //按先后顺序将各个分类数据装入数据包
+        sessionidByte.CopyTo(totalByte,4);
+        commandByte.CopyTo(totalByte,4 + sessionidByte.Length);
+        subcommandByte.CopyTo(totalByte, 4 + sessionidByte.Length + commandByte.Length);
+        encryptByte.CopyTo(totalByte, 4 + sessionidByte.Length + commandByte.Length + subcommandByte.Length);
+        MessageBodyByte.CopyTo(totalByte, 4 + sessionidByte.Length + commandByte.Length + subcommandByte.Length + encryptByte.Length);
+
+        Debug.Log("发送数据包的总长度为："+ totalByte.Length);
+        return totalByte;
+    }
+
+
+收包，分离粘包：
+
+
+
+
+///<summary>
+    ///接收信息
+    ///</summary>
+    private static void ReceiveMessage()
+    {
+        while (true)
+        {
+            //接受数据头，数据头的字节总数为4，数据头是一个int数据，存储整个数据包的大小（字节数），包含数据头本身
+            int HeadLength = 4;
+            //存储数据头的所有字节数
+            byte[] recvBytesHead = new byte[HeadLength];
+            //如果当前需要接收的字节数大于0，则循环接收
+            while (HeadLength > 0)
+            {
+                byte[] recvBytes1 = new byte[4];
+                //将本次传输已经接收到的字节数置0
+                int iBytesHead = 0;
+
+                //如果当前需要接收的字节数大于缓存区大小，则按缓存区大小进行接收，相反则按剩余需要接收的字节数进行接收
+                if (HeadLength >= recvBytes1.Length)
+                {
+                    iBytesHead = socketClient.Receive(recvBytes1, recvBytes1.Length, 0);
+                }
+                else
+                {
+                    iBytesHead = socketClient.Receive(recvBytes1, HeadLength, 0);
+                }
+
+                //将接收到的字节数保存
+                recvBytes1.CopyTo(recvBytesHead, recvBytesHead.Length - HeadLength);
+                //减去已经接收到的字节数
+                HeadLength -= iBytesHead;
+            }
+
+
+            //接受数据体，数据体的字节总数为BodyLength（需要减去4个包头长度）
+            int BodyLength = BitConverter.ToInt32(recvBytesHead, 0) - 4;
+            //存储数据体的所有字节数
+            byte[] recvBytesBody = new byte[BodyLength];
+            //如果当前需要接收的字节数大于0，则循环接收
+            while (BodyLength > 0)
+            {
+                byte[] recvBytes2 = new byte[BodyLength < 1024 ? BodyLength : 1024];
+                //将本次传输已经接收到的字节数置0
+                int iBytesBody = 0;
+
+                //如果当前需要接收的字节数大于缓存区大小，则按缓存区大小进行接收，相反则按剩余需要接收的字节数进行接收
+                if (BodyLength >= recvBytes2.Length)
+                {
+                    iBytesBody = socketClient.Receive(recvBytes2, recvBytes2.Length, 0);
+                }
+                else
+                {
+                    iBytesBody = socketClient.Receive(recvBytes2, BodyLength, 0);
+                }
+
+                //将接收到的字节数保存
+                recvBytes2.CopyTo(recvBytesBody, recvBytesBody.Length - BodyLength);
+                //减去已经接收到的字节数
+                BodyLength -= iBytesBody;
+            }
+            //一个数据包接收完毕，解析数据体
+            UnpackData(recvBytesBody);
+        }
+    }
+    
+    拆包，解析包：
+    
+    怎么封装怎么拆包：
+    
+    
+    /// <summary>
+    /// 拆解消息数据包
+    /// </summary>
+    /// <param name="recvBytes">数据包</param>
+    public static void UnpackData(byte[] recvBytes)
+    {
+        byte[] bytes = new byte[8];
+        Array.Copy(recvBytes, 0, bytes, 0, 8);
+        Debug.Log("接收到数据包中的用户身份ID为：" + BitConverter.ToInt64(bytes, 0));
+
+        bytes = new byte[4];
+        Array.Copy(recvBytes, 8, bytes, 0, 4);
+        Debug.Log("接收到数据包中的数据主命令为：" + BitConverter.ToInt32(bytes, 0));
+
+        bytes = new byte[4];
+        Array.Copy(recvBytes, 12, bytes, 0, 4);
+        Debug.Log("接收到数据包中的数据子命令为：" + BitConverter.ToInt32(bytes, 0));
+
+        bytes = new byte[4];
+        Array.Copy(recvBytes, 16, bytes, 0, 4);
+        Debug.Log("接收到数据包中的加密方式为：" + BitConverter.ToInt32(bytes, 0));
+
+        bytes = new byte[recvBytes.Length - 20];
+        Array.Copy(recvBytes, 20, bytes, 0, bytes.Length);
+        Debug.Log("接收到数据包中的数据体为：" + Encoding.UTF8.GetString(bytes, 0, bytes.Length));
+    }
+    
+    
+
+
+
+
+MemoryStream:作为
+
+
+public static class EncodeTool
+{
+  #region 粘包拆包问题，封装规定数据包
+  
+  public static byte[] EncodeMessage(byte[] data)
+  {
+    //内存流对象
+    using(MemoryStream ms = new MemoryStream())
+    {
+      //向内存流写入数据
+      using(BinaryWriter bw = new BinaryWriter(ms))
+      {
+        //先写入长度
+        bw.Write(data.Length);
+        //再写入数据
+        bw.Write(data);
+        
+        byte[] byteArray = new byte[(int)ms.Length];
+        //Buffer.BlockCopy 转移数据
+        Buffer.BlockCopy(ms.GetBuffer(),0,byteArray,0,(int)ms.Length);
+        return byteArray;
+        
+      }
+    }
+  
+  
+  
+  
+  
+  
+  
+  
+  }
+
+}
