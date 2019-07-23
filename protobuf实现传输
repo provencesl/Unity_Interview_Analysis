@@ -1,0 +1,113 @@
+ProtoBuf是Google公司推出的一种二进制序列化工具，适用于数据的网络传输。
+基于Socket实现时时通信，关于数据粘包的编码和解码处理是必不可少的。
+
+
+   1.基于ProtoBuf序列化对象
+   2.使用Socket实现时时通信
+   3.数据包的编码和解码
+   
+   
+   Unity使用Socket通信：
+   
+   通信应该实现的功能：
+1.服务器可以时时监听多个客户端
+2.服务器可以时时监听某一个客户端消息
+3.服务器可以时时给某一个客户端发消息
+
+
+
+using System;
+using ProtoBuf;
+ 
+//添加特性，表示可以被ProtoBuf工具序列化
+[ProtoContract]
+public class NetModel {
+    //添加特性，表示该字段可以被序列化，1可以理解为下标
+    [ProtoMember(1)]    
+    public int ID;
+    [ProtoMember(2)]
+    public string Commit;
+    [ProtoMember(3)]
+    public string Message;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+using System;
+using System.Net.Sockets;
+ 
+/// <summary>
+/// 表示一个客户端
+/// </summary>
+public class NetUserToken {
+    //连接客户端的Socket
+    public Socket socket;
+    //用于存放接收数据
+    public byte[] buffer;
+ 
+    public NetUserToken()
+    {
+        buffer = new byte[1024];
+    }
+ 
+    /// <summary>
+    /// 接受消息
+    /// </summary>
+    /// <param name="data">Data.</param>
+    public void Receive(byte[] data)
+    {
+        UnityEngine.Debug.Log("接收到消息！");
+    }
+ 
+    /// <summary>
+    /// 发送消息
+            /// </summary>
+    /// <param name="data">Data.</param>
+    public void Send(byte[] data)
+    {        
+ 
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
