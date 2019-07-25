@@ -1,0 +1,8 @@
+https://blog.csdn.net/claine/article/details/52374546
+
+
+启动Socket框架，主要通过ip,port异步连接。
+
+
+成功，则new线程，开始接受数据。
+异常：超时，失败处理
