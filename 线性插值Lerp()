@@ -1,0 +1,11 @@
+Lerp在Mathf和ector3中都存在。通常是起到平稳过渡的作用。
+
+
+
+void Update()
+{
+    float lerpValue = Mathf.Lerp(startX，endX，(Time.time-startTime )* speed);
+    transform.position = new Vector3(lerpValue,0,0);
+}
+Mathf.Lerp(float a, float b, float t)
+第三个参数t的意义：它是一个百分比，最小值有效值是0，最大有效值是1，如果超出了1，就取1，小于0则取0.
