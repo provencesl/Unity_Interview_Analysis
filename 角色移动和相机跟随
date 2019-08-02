@@ -1,0 +1,57 @@
+通常，游戏中点击某个位置，角色会自动移动到该位置。并且角色一直是朝向对应位置的，而且相机移至跟随角色移动。滑动鼠标，也会跟随角色旋转。
+
+角色移动：
+1）移动至目标位置：线性插值和曲线插值
+2）角色朝向：移至面朝目标点
+
+
+相机跟随角色：
+1）相机俯视角度，决定相机高度
+2）相机跟随距离，钱箱距离或者直线距离（就是三角形的水平边长或者斜边长）
+3）相机一直看角色的后背（Y轴旋转角度和角色一致）
+4）相机围绕角色旋转
+
+
+技术点：
+1）向量
+2）旋转
+
+Quaternion.LookRotation:注视旋转
+创建一个旋转，沿着forward（z轴）并且头部沿着upwards（y轴）的约束注视。也就是建立一个旋转，使z轴朝向view  y轴朝向up。
+如果forward方向是0，记录一个错误。
+
+
+向量，包含大小和方向。大小很容易得到，那么方向怎么获得呢？常规来说，可以通过把向量分解为x、y、z三个分量，
+然后通过三角函数依次求得个分量的夹角。
+
+
+unity提供了更简单的方法，就是Quaternion.LookRotation，这个方法就是获得传入向量的方向，即旋转值，是个四元数。
+
+
+角色朝向目标点移动：
+代码比较简单：
+//计算当前位置到下一个坐标点的向量
+var vector = (posB - posA).normalized;
+//取得向量的方向
+ var rotation = Quaternion.LookRotation(vector).eulerAngles;
+ //将物体旋转到指向下一个坐标方向
+transform.rotation = Quaternion.Euler(0,rotation.y,0);
+//设置物体坐标
+transform.position = posB;
+
+
+Quaternion.Euler(0,rotation.y,0)的x方向和Z方向都是0？？
+因为角色的朝向是根据偏转角Yaw，也就是Y轴决定的，x和z轴是没有发生偏转的，倘若改变x轴z轴旋转值，就会发现角色会有俯仰、翻滚的效果。
+
+
+
+
+
+：
+https://www.cnblogs.com/fishyu/p/6817231.html
+
+
+
+
+
+
