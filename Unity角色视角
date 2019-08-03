@@ -1,0 +1,43 @@
+实现第三人称视角：
+1）最简单的就是 直接 把主相机作为Player角色的子物体，并自行固定好相机的位置
+2）设置一个空的GameObject，并且与Player的旋转和位置保持一致，然后将 主相机 设置成该GameObject的子对象。这种做法和方案 1 相似。 
+（这种做法好处在于 当模拟角色死亡倒地的时候比较方便，如果采用方案 1 ，只能是重新创建一个相机，因为角色倒地的时候，子物体相机也会视角倒地，所以效率肯定方案 2 高）
+3）代码动态调整相机位置。
+
+模仿WOW镜头：学习WowMainCamera:
+拉远了是第三人称，拉近了是第一人称。
+
+
+知识点：
+1）Input.GetAxis:使用此可以获取鼠标滚轮滚动幅度
+
+
+
+首先实现一个自由漫游的摄像机：
+public class CameraControl : MonoBehaviour
+{
+
+  public float moveSpeed = 30.0f;
+  public float rotateSpeed = 0.2f;
+  
+  public static Vector3 direction = new Vector3(0.0f,1.0f,0.0f);
+  
+  //控制摄像机旋转的成员变量
+  private float m_lastMousePosY = 0.0f;
+  private float m_lastMousePosY = 0.0f;
+  private bool m_mouseRightKeyDown = false;
+  
+  void Start()
+  {}
+  
+  void Update()
+  {
+    if(Input.GetMouseButtonDown(1))
+    {
+    
+    
+    }
+  }
+}
+
+https://blog.csdn.net/oilcode/article/details/72803837
