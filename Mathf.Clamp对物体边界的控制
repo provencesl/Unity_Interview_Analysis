@@ -1,0 +1,3 @@
+Mathf.Clamp(float value,float min,float max);
+限制value的值在min,max之间。如果value大于max，则返回max。如果value小于min，则返回min.否则返回true
+
