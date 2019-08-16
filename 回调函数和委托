@@ -1,0 +1,40 @@
+实际开发中，回调函数一般和委托 联系在一起来运用。
+
+回调：
+一个对象将一个方法的引用传入另外一个对象，使得只有他可以返回信息，就是回调。
+
+基础回调函数如下：
+
+定义一个委托：
+delegate void DelegateDone();
+
+定义实现函数：
+void FinishWork(DelegateDone callback)
+{
+  callback();
+}
+
+class Program
+{
+  delegate void DelegateDone();
+  
+  static void Main(string[] args)
+  {
+     Program pro = new Program();
+     pro.
+  }
+  
+  void DOWork(DelegateDone callback)
+  {
+    Console.WriteLine("执行某一函数");
+    callBack();
+  }
+  
+  static void testCallBack()
+  {
+    Console.WriteLine("输出回调");
+  }
+}
+
+
+
