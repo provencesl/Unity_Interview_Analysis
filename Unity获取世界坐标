@@ -1,0 +1,13 @@
+Unity鼠标点击获取世界坐标：
+1)Input.mousePosition只有x,y值在改变。Z值没有变化。
+
+鼠标坐标：
+
+摄像机显示画面坐标 几位屏幕坐标
+
+利用ScreenPointToRay():
+
+if（Input.GetMouseButton(0)）
+{
+  Ray ray = Camera.ScreenPointTotRay(Input.mousePosition);
+}
