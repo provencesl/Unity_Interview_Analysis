@@ -1,0 +1,6 @@
+发生碰撞的条件：主动方必须有Rigidbody，发生碰撞的两个游戏对象必须有Collider，被动方对于RigidBody可又不可无，
+Collision Other是表示被动方 
+
+
+发生触发的条件：发生碰撞的物体两者其中之一有Rigidbody即可，发生碰撞的两个游戏对象必须有Collider，
+其中一方勾选IsTrigger即可，参数是表示被动方 
