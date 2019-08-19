@@ -1,0 +1,13 @@
+设置物体位置时：
+transform.position = 欧拉角
+
+设置物体角度时，设置四元数：
+
+1)transform.rotation = Quaternion.Euler(new Vector3(0,90,0));
+
+这种方法改变的是世界坐标的旋转。当 transform挂在某个对象的子节点下，并且父节点的rotation不是（0,0,0）时，会出现bug
+
+2)
+给transform.eulerAngles赋值
+transform.eulerAngles = new Vector3(0,90,0); 相对于世界坐标旋转
+transform.localEulerAngles = new Vector3(0,90,0);相对于局部坐标
