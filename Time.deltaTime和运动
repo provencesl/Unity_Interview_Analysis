@@ -1,0 +1,5 @@
+Time.deltaTime: 表示上一帧到本帧的时间
+
+moveSpeed * Time.deltaTime:  每秒/s * （一帧多少秒） = 移动距离
+
+this.transform.translate(Vector3.down * moveSpeed * Time.deltaTime); 向一个方向移动 多少距离
