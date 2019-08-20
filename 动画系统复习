@@ -1,0 +1,12 @@
+动画系统分为两种实现方式：
+
+1）修改模型的Transform，配合模型的动画效果，比较真实地实现模型的动画。它的实质是模型原地动画+Transform数据更改
+
+2）由动画控制的位移，即模型动画本身是带有位移效果的，我们往往用Blend Tree混合控制动画的播放，由动画真实的完成模型的运动效果
+
+
+BlendTree 控制人物移动
+https://blog.csdn.net/weixin_38239050/article/details/79829027
+
+IK动画-守鹤木头匹配
+https://blog.csdn.net/weixin_38239050/article/details/79859384
