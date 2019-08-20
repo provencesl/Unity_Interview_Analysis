@@ -1,0 +1,33 @@
+Physics.Raycast(Vector3 origin,Vector3 direction,out RaycastHit hit,float maxDistance,int layerMask)
+
+
+public class Test : MonoBehaviour
+{
+  int targetMask;
+  
+  void Start()
+  {
+    targetMask = LayerMask.GetMask("target");
+    
+  }
+  
+  
+  void Update()
+  {
+   //创建一条从摄像机到屏幕的射线，并穿过屏幕position像素坐标position.z
+    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+    
+    
+    RaycastHit hit;
+    
+    if(Physics.Raycast(ray,out hit,100f,targetMask))
+    {
+      Vector3 offset = new Vector3(15,0,0);
+    
+    }
+    
+    
+  
+  }
+
+}
