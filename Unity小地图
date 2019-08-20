@@ -1,0 +1,27 @@
+Unity小地图：
+
+点击小地图某处，让player移动到目标位置：
+
+public class CameraRaycast : MonoBehaviour
+{
+  private Ray ray;
+  private RaycastHit hit;  //
+
+  private GameObject navPlayer;
+  private NavMeshAgent agent; //
+  public LayerMask myLayer;
+  public Camera mapCamera;
+  private void Start()
+  {
+    agent = navPlayer.GetComponent<NavMeshAgent>();
+  }
+  
+  private void Update()
+  {
+    //射线起始位置
+    ray = mapCamera.ScreenPointToRay(Input.mousePosition);
+  
+  }
+
+
+}
