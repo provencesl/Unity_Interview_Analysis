@@ -1,0 +1,9 @@
+第一步，创建人物player,添加方式为 Component/Navigation/NavMeshAgent,点击Window/Navigation调出Navigation编辑器
+
+Navigation Static: 勾选
+Generate OffMeshLinks:勾选
+
+第二步，选择Terrain.点开Navigation编辑器，将地形设置为Navigation Static。
+
+Navigation Area: Walkable，表示可以走
+
