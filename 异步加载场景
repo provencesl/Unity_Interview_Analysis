@@ -1,0 +1,46 @@
+假设当前场景为A，要切换到下一个场景B，如果使用正常加载方式。Unity会在切换场景时加载场景B的所有内容到内存中【即为Hierachy内所有内容】。由于加载场景B是同步执行的，所以当场景B较大是，
+就会在加载过程出现卡顿。
+
+对于此种情况，通常采用异步加载方式。异步加载通常是在后台线程运行，所以不影响当前线程。
+
+对于手游，场景切换部分为3大部分。
+异步：
+UI场景 （选择关卡）=> Loading过渡场景（显示进度条）=> 具体关卡打斗场景
+
+
+
+public class LoadAsyncScene:MonoBehaviour
+{
+  //显示进度的文本
+  private Text progress;
+  //进度条的数值
+  //进度条
+  private Slider slider;
+  
+  
+  [Tooltip("下个场景的名字")]
+  public string nextSceneName;
+  
+  private AsyncOperation async = null;
+  
+  
+  private void Start()
+  {
+    progress = GetComponent<Text>();
+    slider = FindObjectOfType(Slider);
+    
+    
+  }
+  
+  IEnumerator LoadScene()
+  {
+    
+    async = SceneManager.LoadSceneAsync(nextSceneName);
+    
+  
+  }
+  
+  
+
+
+}
