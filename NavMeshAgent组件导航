@@ -1,0 +1,24 @@
+手游自动寻路实现方式存在很多种：
+1)A* 寻路
+2）Unity内置NavMesh
+
+
+using UnityEngine.AI;
+
+
+public NavMeshAgent playerAgent;
+
+
+1）利用NavMeshAgent组件实现点击地图控制角色移动：
+
+void Update()
+{
+  if(Input.GetMouseDown(0))
+  {
+    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+    RaycastHit hit;
+ 
+    
+  }
+
+}
