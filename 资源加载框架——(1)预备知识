@@ -1,0 +1,19 @@
+1)AssetBundle打包管理
+2）类对象资源池
+3）AssetBundle打包管理
+4）离线数据及配置表
+
+预备知识：
+1.程序集 dll
+
+2.unity资源加载方式介绍 
+
+3.c#的xml序列化  
+
+4.unity asset序列化
+
+
+资源加载：
+1）Resources.Load()
+2) AssetBundle  【常用】
+
