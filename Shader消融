@@ -1,0 +1,114 @@
+主要是利用自己的规则决定是否剔除某像素点，既然针对像素点，自然需要处理片元着色器，{俗称为像素着色器(Pixel Shader)}。
+
+
+最初的片元着色器/顶点着色器，属于UNLIT Shader[无光照着色器]
+
+
+
+
+
+
+顶点/片元着色器渲染流程图：
+
+1)网格数据 + 常数属性数据 
+
+常数属性数据包括： 资源，脚本，动画数据
+网格数据包括：Mesh
+通常使用结构体Struct把网格数据直接给顶点函数
+
+
+2)顶点函数
+
+顶点Vertex函数
+用来构建对象。输入参数是网格数据，输出的是顶点到片元结构体
+Vertex To Fragment,简称v2f
+
+//构建对象，输入appdata,即组织好的网格数据
+//输入的顶点数据需要从对象空间转到屏幕空间
+
+//使用UnityObjectToClipPos函数方式直接处理顶点（vertex）信息。调用这个方法一般需要引入UnityCG.cginc预定义文件，通过#include “UnityCG.cginc”实现
+v2f vert(appdata v)
+{
+  v2f o;
+  //操纵对象的结构
+  o.vertex = UnityObjectToClipPos(v.vertex);
+  o.uv = TRANSFORM_TEX(v.uv,_MainTex);
+  return o;
+  
+}
+
+3）顶点到片元结构体
+
+
+
+
+
+
+Shader"Unity Shader/Simple Shader"{
+
+  SubShader{
+  
+  }
+  
+  Pass{
+  
+    //CG语句
+    CGPROGRAM
+    
+    //告诉unity函数vert包含顶点着色器
+    #pragma vertex vert
+    
+    //告诉unity 函数frag包含片元着色器
+    #pragma fragment frag
+    
+    
+    float vert(float4 v:POSITION) : SV_POSITION{
+    
+      return mul(UNITY_MATRIX_MVP,v);
+    }
+    
+    float frag() : SV_Target{
+    //返回一个表示白色的fixed4类型变量，(R,G,B,A)
+      return fixed4(1.0,1.0,1.0,1.0);
+    }
+    
+    ENDCG
+  
+  }
+  
+  
+  
+  
+  
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+消融原理：
+1)使用噪声和透明度测试、
+从噪声图中读取某个通道的值。
+然后使用该值进行透明度测试。
+
+
+核心代码：
+fixed cutout = text2D(_NoiseTex,i,uvNoiseTex).r;
+cli(cutout - _Threshold);
+
+主要是利用自己的规则决定是否剔除某像素点，既然针对像素点，自然需要处理片元着色器。
+提取像素需要使用UnityShder的clip() . [clip如果输入向量的任何元素小于0，则丢弃当前像素]
+
+
