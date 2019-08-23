@@ -1,0 +1,29 @@
+CharacterController包含Rigidbody组件的一些属性，个人理解，有CharacterController后，不需要在添加
+Rigidbody组件了。
+
+控制器不会对加在它自身上的力做出反应，也不会自动推开其他刚体。
+
+如果想让角色控制器推开其他刚体或者对象，你可以在对象附加的脚本中添加OnControllerColliderHit()函数，这样对它
+们施加力就能够产生碰撞。
+
+
+使用CharacterController控制人物移动：
+
+
+public class PlayerMove : MonoBehaviour
+{
+
+  private CharacterController player;
+  
+  private bool isJump;
+  private bool isMove;
+  
+  
+  private Vector3 moveDirection;
+  
+  private Vector3 targetDir;
+  
+  
+  
+
+}
