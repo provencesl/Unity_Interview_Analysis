@@ -1,0 +1,94 @@
+消融的效果本质上是通过顶点/片元着色器来实现的。
+
+
+顶点/片元着色器的渲染流程：
+
+1）数据引入：
+
+网格数据 + 常数属性数据 
+
+网格数据：Mesh
+常数属性数据：资源（Assets）、脚本（Scripts）和动画数据（Animation Data）来驱动表现效果，甚至是粒子系统（Particle System）也能作用
+
+
+
+2）顶点函数：Vertex()
+
+顶点函数用来构建对象，输入appdata。
+经过处理后，输出的将是顶点到片元结构体，即为Vertex to Fragment,一般简称为v2f.
+
+输入的顶点数据是需要从对象空间转换到屏幕空间。
+
+3)顶点到片元结构体: v2f
+
+这个结构体用于存储从顶点函数输出和片元函数输入的数据。
+计算输出的顶点位置，自动绘制到屏幕上。
+struct v2f
+{
+  float uv:
+  float4 vertex: SV_POSITION;
+}
+
+片元函数：
+
+fixed frag(v2f i) : SV_Target
+{
+  
+}
+
+常用于将对象描绘到屏幕上，它输入的是v2f结构体数据，而输出的就是像素点。使用CG方法tex2D，
+输入参数纹理及UV坐标，就可以获得每个UV对应点的纹理的颜色。
+
+
+Pass
+{
+  CGPROGRAM
+  //编译指令，指定着色器处理函数
+  #pragma  vertex vert          
+  #pragma fragment frag 
+  
+  float4 vert(float4 v:POSITION) : SV_POSITION{
+    return mul(UNITY_MAXTRIX_MVP,v);
+  }
+  
+  fixed frag():SV_TARGET{
+    return fied4(1.0,1.0,1.0,1.0);
+  }
+  
+  ENDCG
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
