@@ -1,0 +1,151 @@
+实现思路：
+1）加载器加载场景
+2）加载进度通知UI
+3）实时更新UI进度条
+
+场景加载器：
+SceneLoader.cs:
+
+***********************
+
+using UnityEngine;
+using System.Collections;
+using UnityEngine.SceneManagement;
+
+public class SceneLoader : MonoBehaviour
+{
+  //场景名称
+  public string sceneName;
+  //进度条时间接受者
+  public Transform progressReceiver;
+  //加载进度
+  private float _progress = 0;
+  
+  //异步加载信息
+  private AsyncOperation async;
+  
+  public void Load()
+  {
+    
+  }
+  
+  
+  public void LoadScene(string sceneName)
+  {
+    
+  }
+  
+  
+  public bool isLoading{
+    get{return async != null;}
+  }
+  
+  public float progress{
+    get{return _progress;};
+  }
+  
+  public void Update(){
+    if(async == null){
+      enabled = false;
+    }
+    else
+    {
+      //加载进度值范围为0 - 0.9,这里做处理
+      float progreee = async.progress;
+      progress = progress < 0.9f ? progress * (10 /9f) : 1;
+      
+      _progress = progress;
+      if(progressReceiver != null)
+      {
+        progressReceiver.SendMessage();
+      }
+      
+      
+      
+    }
+    
+  }
+
+}
+
+
+
+
+进度条：
+ProgressBar.cs:
+
+public class Progress : MonoBehaviour，IOnProgress{
+
+  //进度条
+  private Slider slider;
+  //进度文本
+  private Text text;
+  
+  #if UNITY_EDITOR
+  private void Reset(){
+    slider = GetComponentInChildren<Slider>;
+    text = GetComponentInChilder<Text>();
+  }
+  
+  #endif
+  
+  ///进度条更新事件
+  public void OnProgress(float progress)
+  {
+    if(slider != null){
+      if(slider != null){
+        slider.value = progress;
+        
+      }
+      if(text != null){
+        text.text = (int)(progress * 100) +"%;
+      }
+      
+    }
+  }
+  
+
+
+}
+
+
+
+
+
+
+
+
+
+
+进度更新接口：
+IOnProgress.cs:
+
+public interface IOnProgress{
+
+  /// <summary> 进度更新事件 </summary>
+  /// <param name="progress">进度百分比</param>
+  void OnProgress(float progress);
+
+}
+
+
+通常情况下，
+同步加载场景会导致线程阻塞。即在当前场景A当中，Unity切换场景，销毁A
+利用异步加载场景
+
+
+
+参考资料：
+
+
+
+【Unityu场景加载进度条】:https://segmentfault.com/a/1190000015302921
+
+
+
+
+
+
+
+
+
