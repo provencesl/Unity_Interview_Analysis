@@ -1,4 +1,29 @@
-AssetBundle本地加载：
+AssetBundle资源管理功能：
+1）读取AssetBundle配置表
+2) 设置中间类进行引用计数
+3）根据路径加载AssetBundle
+4) 根据路径卸载AssetBundle
+5）为ResourceManager提供加载中间类，根据中间类释放资源
+
+
+资源具有三种状态：
+1）未加载
+2）已加载
+3）可释放
+
+接下来要使用的资源就必须要加载到池中。接下来很长时间不需要使用的资源则彻底释放。
+确保内存在可控范围。
+
+
+设计：
+为了达到这种目的，划分为三大模块去做。
+1）最基础的资源加载和池
+2）资源加载的自动记录过程
+3）资源加载的动态加载和释放
+
+
+
+
 
 public class Test : MonoBehaviour
 {
@@ -18,3 +43,6 @@ public class Test : MonoBehaviour
     }
   }
 }
+
+
+
