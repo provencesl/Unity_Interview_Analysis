@@ -1,0 +1,20 @@
+AssetBundle本地加载：
+
+public class Test : MonoBehaviour
+{
+  void Start()
+  {
+    AssetBundle obj = AssetBundle.LoadFromFile(Application.streamingAssetsPath+"/test.cube");
+    if(obj == null)
+    {
+    Debug.Log("加载失败");
+    return;
+    }
+    else
+    {
+      GameObject a = obj.LoadAsset<GameObject>("cube"); //加载资源包文件
+      Instantiate(a);    //实例化读取对象
+      obj.Unload(false);   //shi8fang读取的对象，如果为true则释放全部资源
+    }
+  }
+}
