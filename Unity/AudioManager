@@ -1,0 +1,35 @@
+面向接口编程本质上还是面向对象编程。接口本质上还是一种类（对象），只不过抽象程度更高而已。
+
+
+
+面向接口编程：
+public interface IAudio
+{
+  AudioSource GetAudioSource();
+  
+  void OnPlayAudio();
+  
+  void OnPlayAudio(int index);
+  
+  void OnPlayAudio(string aduioName);
+  
+  void OnPlauyAudio(AudioClip clip);
+  
+  void AddAudioClips(AudioClip[] clips);
+  
+  void RemoveAudioClips(AudioClip[] clips);
+  
+}
+
+
+AudioManager:
+
+public class AudioManager : IAudio,MonoBehaviour
+{
+  private AudioSource audioSource;
+  
+  
+  private List<AudioClip> audioPool = new List<>();
+  
+  //TODO
+}
