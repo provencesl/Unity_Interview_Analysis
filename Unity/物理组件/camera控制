@@ -1,0 +1,8 @@
+Camera相机控制的核心在于 向量。
+
+向量旋转 = 四元数 * 向量
+
+初始值(0,0,1)的向量：
+private Vector3 targetPos = Vector3.forward;
+
+
