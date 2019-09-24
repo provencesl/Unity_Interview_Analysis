@@ -1,0 +1,172 @@
+public enum TakState
+{
+ get,
+ progress,
+ finish,
+ reward
+
+}
+
+
+
+//对象实体
+
+public class Task
+{
+/**任务id*/
+	private int taskId;
+	/**任务状态*/
+	private int taskState;
+	/**任务进度*/
+	private int progress;
+	/**任务配置表*/
+	private transient Tasktemplate tasktemplate;
+	/**任务目标实体*/
+	private transient ITarget target;
+
+
+
+public Task(int taskId, int taskState) {
+		this.taskId = taskId;
+		this.taskState = taskState;
+		this.tasktemplate = DataManager.getSingleData(GameConfigTable.tasktemplate, this.taskId);
+		this.target = TargetType.getITargetById(this.tasktemplate.getTargetType());
+	}
+	public Tasktemplate getTasktemplate() {
+		return tasktemplate;
+	}
+	public int getTaskId() {
+		return taskId;
+	}
+	public void setTaskId(int taskId) {
+		this.taskId = taskId;
+	}
+	public int getTaskState() {
+		return taskState;
+	}
+	public void setTaskState(int taskState) {
+		this.taskState = taskState;
+	}
+	public int getProgress() {
+		return progress;
+	}
+	public void setProgress(int progress) {
+		this.progress = progress;
+	}
+	
+	public int getTaskType(){
+		return this.tasktemplate.getTaskType();
+	}
+	
+	public ITarget getTarget() {
+		return target;
+	}
+	
+	/**下一个任务*/
+	public int getNextTaskId(){
+		return this.tasktemplate.getPostTaskId();
+	}
+
+
+}
+
+
+
+
+
+
+public enum TargetType {
+	/**0  none*/
+	Null(null),
+	/**1  打怪*/
+	HitMonster(new HitMonsterTarget()),
+	/**2 采集*/
+	Collect(new CollectTarget()),
+	/**3 收集*/
+	Gather(new GatherTarget()),
+	/**4 通关*/
+	PassKa(new PassKaTarget()),
+	/**5 对话*/
+	DialogTarget(new DialogTarget()),
+	/**6 送物品*/
+	GiveItem(new GiveItemTarget()),
+	/**7 护送*/
+	Escort(new EscortTarget()),
+	/**8 使用物品*/
+	UseItem(new UseItemTarget()),
+	/**9 特殊*/
+	Special(new SpecialTarget()),
+	;
+		
+	private ITarget target;
+	
+	private TargetType (ITarget target){
+		this.target = target;
+	}
+ 
+	public ITarget getTarget() {
+		return target;
+	}
+ 
+        /**获得任务目的的具体实体对象   在构造任务实体对象的时候调用*/
+	public static ITarget getITargetById(int targetId){
+		TargetType[] values = TargetType.values();
+		TargetType targetType = values[targetId];
+		return targetType.getTarget();
+	}
+}
+
+
+
+
+public interface ITarget {
+	/**任务进行中  检查是否完成*/
+	boolean checkTaskComplete(Hero hero,Task task);
+ 
+}
+
+
+/**
+ * 任务相关的逻辑处理
+ * @author kevin chen
+ * @Description: TODO 
+ * @date 2015年10月22日 上午11:45:48
+ */
+public class TaskManager {
+	/**
+	 * 当前玩家是否满足任务的等级要求
+	 * @param hero
+	 * @param tasktemplate
+	 * @return true:满足   false:不满足
+	 */
+	public static boolean isEnoughTaskLevel(Hero hero,Tasktemplate tasktemplate){
+		return true;
+	}
+	/**
+	 * 更新某个任务
+	 * @param hero
+	 * @param task
+	 */
+	public static void updateTaskMsg(Hero hero,Task task){
+		
+	}
+	
+	/**
+	 * 任务进行中 判断任务是否完成！
+	 * 该方法供相关任务所设计到的各个模块调用！
+	 * @param hero
+	 */
+	public static void checkTask(Hero hero){
+		List<Task> doingTasks = hero.getDoingTasks();
+		for (Iterator<Task> iterator = doingTasks.iterator(); iterator.hasNext();) {
+			Task task = iterator.next();
+			ITarget target = task.getTarget();
+			boolean complete = target.checkTaskComplete(hero, task);
+			if(complete){
+				updateTaskMsg(hero, task);
+			}
+		}
+	}
+ 
+}
+
