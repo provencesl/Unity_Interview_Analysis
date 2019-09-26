@@ -1,0 +1,34 @@
+行为树的实现：主要依赖节点来实现。
+
+行为树主要由几大部分组成：
+1）Composites  组合节点
+2) Decorator   装饰节点
+3) Actions     行为节点
+4) Conditinals 条件节点
+
+首先，是行为节点基类：
+[System.Serializable]
+public abstract class Node
+{
+  public delegate NodeStates NodeReture();
+  
+  protected NodeStates nodeState;
+  
+  public NodeStates nodeState
+  {
+    get;
+   
+  }
+  
+  public Node(){}
+  
+  public abstract NodeStates Evaluate();
+}
+
+public class Selector : Node
+{
+  
+
+}
+
+
