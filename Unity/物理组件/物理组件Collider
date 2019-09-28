@@ -28,7 +28,3 @@
 3）MonoBehaviour:OnCollisionStay(Collision collisionInfo):逗留碰撞器
 
 
-
-
-CharacterController和RigidBody的区别？
-
