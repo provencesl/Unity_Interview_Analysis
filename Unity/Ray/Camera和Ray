@@ -1,0 +1,5 @@
+Unity中把射线碰到的店(hit)转换为非主摄像机的屏幕坐标??
+1) 
+public Camera myCamera;
+myCamera.WorldToScreenPoint(hit);
+
