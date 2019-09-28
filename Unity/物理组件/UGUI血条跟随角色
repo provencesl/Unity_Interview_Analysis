@@ -7,3 +7,10 @@
 问题：血条会把别的角色挡住
 
 3）设置Canvas为相机模式，计算角色屏幕坐标，再用角色屏幕坐标计算血条世界坐标……
+
+第一步：创建血条UI
+第二步：创建角色物体，挂载脚本
+第三步：获得角色位置坐标，转换为屏幕z坐标
+Vector3 pt = Camera.main.WorldToScreenPoint(new Vector3(this.transform.position.x, this.transform.position.y + 1, this.transform.position.z))
+第四步：设置Ui坐标，设置屏幕坐标转换为世界坐标
+
