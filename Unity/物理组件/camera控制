@@ -6,3 +6,12 @@ Camera相机控制的核心在于 向量。
 private Vector3 targetPos = Vector3.forward;
 
 
+Quaternion.LookRotation():
+参考世界坐标轴，将坐标放入世界坐标系中。
+
+效果：
+敌人Enemy一直注视目标点Target
+Quaternion.LookRotation(Target.position - Enemy.position);  
+
+参考文献：
+https://www.iteye.com/blog/hypercube-2320466
