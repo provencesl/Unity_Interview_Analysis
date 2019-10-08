@@ -1,0 +1,21 @@
+理解Collider和Trigger，就必须对这两者都有清晰的认识。
+
+Collider:碰撞器
+
+Collider:
+  Static Collider  静态碰撞器
+  Rigidbody Collider 刚体碰撞器【特指附加刚体和碰撞器的游戏对象】
+  Kinematic Rigidbody Collider 运动学刚体碰撞器
+  
+  
+碰撞产生的条件：
+1）两个碰撞器，且至少一个是刚体碰撞器【不含运动学刚体碰撞器】
+
+触发产生的条件：
+1）两个碰撞器，且至少有一个是刚体碰撞器【包含运动学碰撞器】
+2）至少一个勾选iTrigger
+3）必须是具有刚体的一方去碰撞【没有刚体的碰撞具有刚体的静止物体，不会反应，因为刚体休眠】
+
+角色控制器Character Controller，相当于刚体碰撞器
+
+控制器不会对施加自身的力做出反应，也不会自动推开其他刚体。
