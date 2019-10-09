@@ -1,0 +1,63 @@
+Camera较为常见的功能就是:  相机跟随人物移动。
+
+第一种：
+在Unity的坐标系中，将摄像机固定在主角头部上边靠后位置。主角移动，相机跟随人物移动。
+即：摄像机相对主角，总是在Vector3.forward方向上靠后一些，在Vector3.up方向片上一些。
+同时为了摄像机移动更加平滑，避免出现掉帧现象，引入插值函数Vector3.Lerp()，使得摄像机的移动圆滑。
+
+public class ThirdPersonCamera : MonoBehaviour
+{
+  public float distanceAway = 1.7f;
+  public float distanceUp = 1.3f;
+  public float smooth = 2f;
+  
+  private Vector3 m_TargetPosition;
+  private Transform follow;
+
+  private void Start()
+  {
+    follow = GameObject.FindWithTag("Player").transform;
+  }
+  
+  void LateUpdate()
+  {
+    
+  }
+
+}
+
+
+
+
+
+
+
+
+
+public class CameraFollowPlayer : MonoBehaviour
+{
+  //玩家位置
+  public Transform player; 
+  //玩家和相机的偏移
+  private Vector3 pos;
+  
+  public float scrollSpeed = 1;
+  public float rotateSpeed = 1;
+  private bool isRightMouseDown;
+  
+  private void 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
