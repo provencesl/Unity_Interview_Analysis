@@ -1,0 +1,9 @@
+相机Camera中，LookAt是直接看过去，缺少旋转过程。
+
+void CameraRotateToLookAt(Transform target,float rotateSpeed)
+{
+  //取得目标物体相对相机的法向量
+  
+
+
+}
