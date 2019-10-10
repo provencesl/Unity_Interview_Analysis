@@ -30,6 +30,10 @@ public class ThirdPersonCamera : MonoBehaviour
 
 
 
+相机跟随移动的过程中，常常遇到刷新频率不同导致物体抖动。 解决问题的最好做法是：
+（1）当角色的移动和旋转在Update中，把所有相机的移动旋转放在LateUpdate()中
+（2）为了在相机追踪角色位置之前，确保角色已经完成移动和旋转
+
 
 
 
