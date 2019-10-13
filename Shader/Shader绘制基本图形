@@ -1,0 +1,73 @@
+模板：
+Draw.Shader
+
+
+
+Shader "Custom/Draw"
+{
+	Properties
+	{
+ 
+	}
+	SubShader
+	{
+ 
+		Pass
+		{
+			CGPROGRAM
+			#pragma vertex vert
+			#pragma fragment frag
+			
+			#include "UnityCG.cginc"
+ 
+			struct appdata
+			{
+				float4 vertex : POSITION;
+			};
+ 
+			struct v2f
+			{
+				float4 vertex : SV_POSITION;
+			};
+		
+			
+			v2f vert (appdata v)
+			{
+				v2f o;
+				o.vertex = UnityObjectToClipPos(v.vertex);
+				return o;
+			}
+			
+			fixed4 frag (v2f i) : SV_Target
+			{
+				return fixed4(1,1,1,1);
+ 
+			}
+			ENDCG
+		}
+	}
+}
+
+////////////////////////////////////
+
+Shader代码编写：
+1）绘制点或园形：
+点可以认为是只有一个像素的圆形，所以我们统一认为是绘制圆形。为了在屏幕上绘制圆形，我们需要知道圆形的位置和半径。
+
+
+在 Properties中添加要绘制的点位置信息和半径。
+		_Point1("Point1",vector) = (100,100,0,0)
+		_Point2("Point2",vector) = (200,200,0,0)
+
+SubShader中Pass添加:
+
+float4 _Point1;
+float4 _Point2;
+
+
+
+
+
+
+
+
