@@ -1,0 +1,105 @@
+Shader "ShaderTutorial/BaseTexture" // 名称改为BaseTexture
+{
+
+	Properties
+	{
+
+		_BaseColor("BaseColor",Color) = (1,1,1,1)
+		
+		/*
+		    定义一个2D纹理属性,缺省状态是一个白色的纹理
+		*/
+		_BaseMap("BaseMap",2D) = "White"{}
+
+	}
+
+
+	SubShader
+	{
+		Tags { "RenderType" = "Opaque" }
+		LOD 100 
+
+		Pass
+		{
+
+			CGPROGRAM 
+			#pragma vertex vert 
+			#pragma fragment frag 
+
+			#include "UnityCG.cginc" 
+
+
+
+			half4 _BaseColor;
+			sampler2D _BaseMap; // 声明2D纹理采样器
+			float4 _BaseMap_ST; // 纹理对应的缩放和偏移参数,xy为缩放，zw为偏移  格式：纹理名_ST; 
+
+
+        	struct appdata
+        	{
+        		float4 positionOS : POSITION;
+        
+        		/*
+        		语义TEXCOORD0,告诉GPU把顶点的第一套UV坐标填入texcoord变量中，
+        		*/
+        		float2 texcoord:TEXCOORD0;
+        	};
+        
+        
+        	struct v2f
+        	{
+        		float4 positionCS : SV_POSITION;  
+        
+        		/*
+        		这里的语义TEXCOORD0，TEXCOORD1,TEXCOORD2等，
+        		虽然和appdata中的名称一样，但是意义不同，
+        		这里是用来标记一个通用功能的向量，以便在光栅化中进行插值，
+        		只是这里刚好用来保存第一套顶点UV坐标
+        		*/
+        		float2 texcoord:TEXCOORD0;
+        	};
+        
+        
+        	v2f vert(appdata v)
+        	{
+        		v2f o;
+        
+        
+        		o.positionCS = UnityObjectToClipPos(v.positionOS);
+        		
+        		o.texcoord = TRANSFORM_TEX(v.texcoord, _BaseMap);
+        		/*
+        		上述函数TRANSFORM_TEX定义如下：
+        		
+        		// Transforms 2D UV by scale/bias property
+        		#define TRANSFORM_TEX(tex,name) (tex.xy * name##_ST.xy + name##_ST.zw)
+        
+        		用来把顶点uv坐标进行偏移缩放操作，等价于：
+        		o.texcoord = v.texcoord.xy*_BaseMap_ST.xy+_BaseMap_ST.zw;
+        		*/
+        
+        		return o;
+        	}
+        
+        	half4 frag(v2f i) : SV_Target
+        	{
+        		/*
+        			tex2D是纹理采样函数，这里是使用坐标 i.texcoord 采样纹理_BaseMap，
+        			获得texcoord处的颜色值
+        		*/		
+        		half4 baseColor = tex2D(_BaseMap, i.texcoord);
+        
+        		half4 col = half4 (_BaseColor.rgb*baseColor.rgb,1.0);
+        		/*
+        		把我们定义的变量类型_BaseColor.rgb乘以纹理采样结果赋值给col，并返回。
+        		*/
+        		return col;
+        	}
+	        ENDCG 
+        }
+	}
+}
+
+
+
+
