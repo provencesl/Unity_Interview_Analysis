@@ -1,0 +1,143 @@
+属性通常分为：
+1）基础属性 BaseAttribute
+2)附加属性  AdditiveAttribute
+3)当前属性  CurrentAttribute
+4)升级属性  GrowthAttribute
+5)总属性    SumAttribute
+
+
+[System.Serializable]
+    public class BaseAttribute
+    {
+        //等级
+        public int LV;
+        /// <summary>
+        ///血量，魔量 
+        /// </summary>
+        public float HP, MP;
+        /// <summary>
+        ///攻击力， 防御力， 力量， 智力， 敏捷， 体力 
+        /// </summary>
+        public float Attack, Defend, Strong, Intelligence, Agility, Power;
+        /// <summary>
+        /// 攻击速度，散步速度，跑步速度，后退速度，转身移动速度，转身速度，攻击范围，经验值，暴击概率,暴击伤害百分比；
+        /// </summary>
+        public float AttackSpeed, MoveSpeed, RotationSpeed, AttackRange, Exp, CriticalRate, CriticalDamage;
+        /// <summary>
+        /// 每秒血量回复，每秒魔量回复
+        /// </summary>
+        public float HPRecoverPerSecond, MPRecoverPerSecond;
+    }
+
+    [System.Serializable]
+    public class AdditionAttribute
+    {
+        /// <summary>
+        ///血量，魔量 
+        /// </summary>
+        public float HP, MP;
+        /// <summary>
+        ///攻击力， 防御力， 力量， 智力， 敏捷， 体力 
+        /// </summary>
+        public float Attack, Defend, Strong, Intelligence, Agility, Power;
+        /// <summary>
+        /// 攻击速度，散步速度，跑步速度，后退速度，转身移动速度，转身速度，攻击范围，暴击概率,暴击伤害百分比；//暴击概率和攻击范围仅由装备影响。
+        /// </summary>
+        public float AttackSpeed, MoveSpeed, RotationSpeed, AttackRange, CriticalRate,CriticalDamage;
+
+        /// <summary>
+        /// 每秒血量回复，每秒魔量回复
+        /// </summary>
+        public float HPRecoverPerSecond, MPRecoverPerSecond;
+    }
+
+    [System.Serializable]
+    public class CurAttribute
+    {
+        /// <summary>
+        ///血量，魔量 
+        /// </summary>
+        public float CurHP, CurMP;
+        /// <summary>
+        ///攻击力， 防御力， 力量， 智力， 敏捷， 体力 
+        /// </summary>
+        public float CurAttack, CurDefend, CurStrong, CurIntelligence, CurAgility, CurPower;
+        /// <summary>
+        /// 当前攻击速度，当前散步速度，当前跑步速度，当前后退速度，当前转身移动速度，当前转身速度，当前攻击范围，当前暴击概率， 当前暴击伤害百分比；
+        /// </summary>
+        public float CurAttackSpeed, CurMoveSpeed, CurRotationSpeed, CurAttackRange, CurCriticalRate, CurCriticalDamage;
+
+        /// <summary>
+        /// 每秒血量回复，每秒魔量回复
+        /// </summary>
+        public float HPRecoverPerSecond, MPRecoverPerSecond;
+    }
+
+    [System.Serializable]
+    public class SumAttribute
+    {
+        /// <summary>
+        ///血量，魔量 
+        /// </summary>
+        public float HP, MP;
+        /// <summary>
+        ///攻击力， 防御力， 力量， 智力， 敏捷， 体力 
+        /// </summary>
+        public float Attack, Defend, Strong, Intelligence, Agility, Power;
+        /// <summary>
+        /// 攻击速度，移动速度，转身速度，攻击范围，暴击概率,暴击伤害百分比；
+        /// </summary>
+        public float AttackSpeed, MoveSpeed, RotationSpeed, AttackRange, CriticalRate, CriticalDamage;
+
+        /// <summary>
+        /// 每秒血量回复，每秒魔量回复
+        /// </summary>
+        public float HPRecoverPerSecond, MPRecoverPerSecond;
+    }
+
+    [System.Serializable]
+    public class AttributeGrowth
+    {
+        /// <summary>
+        ///血量，魔量 
+        /// </summary>
+        public float HP, MP;
+        /// <summary>
+        ///攻击力， 防御力， 力量， 智力， 敏捷， 体力 
+        /// </summary>
+        public float Attack, Defend, Strong, Intelligence, Agility, Power;
+    }
+
+
+还需要定义一些单独存在的量：比如最高等级，最大经验值、当前等级所需经验，如果有各种动画状态，还需要单独定义步行速度（WalkSpeed）、跑步速度（RunSpeed）、左右转身时向左或向右移动的速度（TurnSpeed），或者还可以定义后退时的移动速度（BackwardSpeed），看个人需求。
+
+
+==========================分割线===========================
+
+以上都只是属性的定义：还需要设计属性和角色的动态变化。
+其实核心就是 接受属性的变化罢了。而接受属性之前，这些值在不同模块之间传递。
+
+
+
+
+
+任务：
+设计角色属性和属性编辑器
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
