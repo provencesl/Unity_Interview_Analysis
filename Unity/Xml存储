@@ -1,0 +1,60 @@
+Xml存储任务：Quest
+
+<Quest>
+  <QuestTitle></QuestTitle>
+  <Nodes>
+    <Node>
+      <NodeTitle></NodeTitle>
+      <NodeText></NodeText>
+      <NodeImage></NodeImage>
+    </Node>
+  </Nodes>
+</Quest>
+
+
+
+
+
+
+using System.Xml.Serialization;
+
+public class QuestNode
+{
+  [XmlElementAttribute("NodeTitle")]
+  public string NodeTitle;
+  
+  [XmlEelmentAttribute("NodeText")]
+  public string NodeText;
+  
+  [XmlElementAttribute("NodeImage")]
+  public string NodeImage;
+  
+  
+
+
+}
+
+Quest:
+
+
+
+
+
+
+
+
+
+
+
+public void WriteToXML()
+{
+  string path = Application.persistentDataPath + “/Load.xml”；
+  
+  XmlDocument doc = new XmlDocument();
+  if(!System.IO.File.Exists(Path))
+  {
+    XmlDeclaration declaration = doc.CreateXmlDeclaration("");
+  }
+
+
+}
