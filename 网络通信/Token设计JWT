@@ -1,0 +1,10 @@
+
+
+
+//头部Token
+public class Header_Token
+{
+  public long expirty;
+  public byte type;
+  public long issureId;
+}
