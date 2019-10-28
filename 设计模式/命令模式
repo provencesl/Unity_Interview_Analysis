@@ -1,0 +1,66 @@
+FPS中：
+
+if(Input.GetKeyDown(KeyCode.A))
+{
+  FireWeapon();
+}
+
+
+public abstract class Command
+{
+  public abstract void Excute();
+
+}
+
+
+public class FireWeapon : Command
+{
+  public override void Excute()
+  {
+    FireTheWeapon();
+  }
+  
+}
+
+public class DoNothing : Command
+{
+  public override void Excute()
+  {
+  
+  }
+}
+
+
+Command KeyA = new FireWeapon();
+Command KeyB = new DONothing();
+
+if(Input.GetKeyDown(KeyCode.A))
+{
+  KeyA.Execute();
+}
+if(Input.GetKeyDown(Keycode.B))
+{
+  KeyB.Execute();
+}
+
+
+常常用于物体移动：
+
+namespace CommandPattern
+{
+  public class InputHandler : MonoBehaviour
+  {
+    
+    
+  }
+
+
+}
+
+
+
+
+
+
+
+
