@@ -50,11 +50,20 @@ namespace CommandPattern
 {
   public class InputHandler : MonoBehaviour
   {
-    
+        
     
   }
 
 
+}
+
+////
+////
+////
+public abstract class Command
+{
+  protected float moveDis = 1f;
+  public abstract void Excute(Transform boxTrans,Command command);
 }
 
 
