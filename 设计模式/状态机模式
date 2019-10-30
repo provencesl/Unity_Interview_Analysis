@@ -1,0 +1,61 @@
+状态机管理游戏：
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+namespace states_by_conditions
+{
+  public enum StateType
+  {
+    FIRST_STATE,
+    SECOND_STATE
+  }
+  
+  public class StatesByConditionalComponent:MonoBehaviour
+  {
+    private StateType _state;
+    public StateType State
+    {
+      get
+      {
+        return _state;
+      }
+      set
+      {
+        _state = value;
+      }
+    }
+    
+    
+    
+    
+  }
+  
+
+}
