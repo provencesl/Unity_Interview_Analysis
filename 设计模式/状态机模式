@@ -8,6 +8,113 @@
 
 
 
+
+
+僵尸Zoombie小游戏:
+
+public enum ZoombieState
+{
+  Attack,Chase,Die
+}
+
+public class Zoomie : MonoBehaviour
+{
+  private ZombieState currentState;
+  
+  private void Update()
+  {
+    switch(currentState)
+    {
+      case ZombieState.Chase:
+        if(currentHealth <= 0)
+        {
+          ChangeState(ZombieState.Die);
+        }
+        if(PlayerInAttackRange())
+        {
+          ChangeState(ZombieState.Attack);
+        }
+        break;
+      case ZombieState.Attack:
+        if(currentHealth <= 0)
+        {
+          ChangeState(ZombieState.Die);
+        }
+        break;
+    }
+  
+  }
+
+
+
+
+}
+
+
+僵尸只根据自身状态判断行为
+public class Zombie : MonoBehaviour
+{
+  private ZombieState currentState;
+  
+  private void Update()
+  {
+    if(currentHealth <= 0)
+    {
+      
+    }
+  }
+
+}
+
+
+
+public abstract class State<T>
+{
+  //进入
+  public abstract void Enter(T entity);
+  //执行
+  public abstract void Execute(T entity);
+  //退出
+  public abstract void Exit(T entity);
+
+
+
+}
+
+
+StateMachine类：
+
+管理State在内部的切换
+public class StateMachine<T>
+{
+ 
+ 
+ 
+ 
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 状态机管理游戏：
 
 
