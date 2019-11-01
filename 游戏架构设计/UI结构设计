@@ -1,0 +1,59 @@
+public class BasePanel : mMonoBehaviour
+{
+  private CanvasGroup  canvasGroup;
+  private Button btn;
+  
+  public void Awake()
+  {
+  }
+
+
+  private Button FindCloseBtn(string childName)
+  {
+    Button closeBtn = null;
+    foreach(var item in GetComponentsInChildren<Button>())
+    {
+      if(item.name == childName)
+      {
+        closeBtn = item.GetComponent<Button>();
+      }
+      return closeBtn;
+    }
+    
+    
+  }
+  
+  
+  public void OnEnter()
+  {
+    canvasGroup.alpha = 1;
+    canvasGroup.blocksRaycasts = true;
+  }
+  
+  
+  public void OnExit()
+  {
+    canvasGroup.alpha = 0;
+     canvasGroup.blocksRaycasts = false;
+  }
+  
+  public void OnPause()
+  {
+    canvasGroup.alpha = 1;
+    canvasGroup.blocksRaycasts = false;
+  }
+  
+  public void OnResume()
+  {
+    canvasGroup.alpha = 1;
+    canvasGroup.blocksRaycasts = true;
+  }
+  
+  
+  
+  
+  
+  
+
+
+}
