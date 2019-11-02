@@ -1,0 +1,47 @@
+namespace common.xml
+{
+  public abstract class DataBaseEntry
+  {
+    [XmlIgnore]
+    public ID DataBaseID{get;set;}
+    
+    [XmlIgnore]
+    public DataBase DataBase{get;set;}
+  
+    
+  
+  }
+  
+  
+}
+
+
+
+
+
+
+
+
+Xml存储地图信息：
+
+
+
+
+
+
+
+
+
+namespace class XmlSerialization
+{
+
+  #region 对象和XML字符串转换
+  public static string Serialize(Type type,object obj,string xmlRootName)
+  {
+  
+  }
+
+
+
+
+}
