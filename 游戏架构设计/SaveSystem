@@ -1,0 +1,25 @@
+public enum SaveType
+{
+  XML,
+  JSON,
+  BINARY,
+  CSV
+
+}
+
+public class SaveData
+{
+  public int id;
+  
+
+}
+
+public interface ISaveAndLoad()
+{
+  public void Save();
+  public void Load();
+  public void UnLoad();
+  public void Delete();
+
+}
+
