@@ -20,7 +20,9 @@ x，y,z角代表Z轴旋转z度，绕x轴旋转x度，绕Y轴旋转y度。
 
 
 旋转角度：
-T
+Transform.rotation 旋转角度
+
+旋转一个物体，使用Transform.Rotate，
 
 
 
