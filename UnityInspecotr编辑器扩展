@@ -1,0 +1,67 @@
+1）Inspector扩展
+（1）目标类 挂在Inspector面板
+（2）绘制类：继承editor
+
+
+绘制方式（1）:
+
+[CustomEditor(typeof(Inspecotr))]
+public class InspectorExampleEditor : Editor
+{
+  
+  
+  
+
+}
+
+
+
+==============     分隔符        =================
+
+public class Hero:MonoBehaviour
+{
+  public int health = 0;
+  public int maxHealth = 100;
+  public bool withShield = 0;
+  public int maxShield = 0;
+  
+  
+  
+
+}
+
+Editor:
+
+{SerializedProperty和SerializedObject提供通用方式编辑对象属性的类，处理UI和预制体}
+
+public class HeroEditor : Editor
+{
+  private SerilizedProperty health;
+  private SerializedProperty maxHealth;
+  private SerializedProperty withShield;
+  private SerializedProperty shield;
+  
+  
+  private void OnEnable()
+  {
+    health = serializedObject.FindProperty("health");
+    maxHealth = serializedObject.FindProperty("maxHealth");
+    withShield = serializedObject.FindProperty("withShield");
+    shield = serializedObject.FindProperty("shield");
+  }
+  
+  
+   private override void OnInspectorGUI（）
+   {
+   
+   }
+
+
+
+
+
+
+}
+
+
+
