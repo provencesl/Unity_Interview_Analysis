@@ -1,0 +1,68 @@
+UnityEditor自制编辑器（一）Gizmos
+
+Unity场景中绘制符号，团和区块来标记区域。比如：重生点，死亡区块或 生怪区。
+这些区域只会在编辑时看到。
+
+绘制OnDrawGizmos，不会编译到游戏中。
+
+OnDrawGizmos():不论有无选中都会绘制
+OnDrawGizmosSelected():只有被选中才会绘制
+
+
+using UnityEngine;
+
+public class DrawGizmo : MonoBehaviour
+{
+  void OnDrawGizmos()
+  {
+    Gizmos.color = new Color(1f,1f,0f,1f);
+    Gizmos.DrawWireCube(this.transform.position,Vector3.one*0.9f);
+    
+    Gizmos.color = new Color(1f,1f,0f,3f);
+    Gizmos.DrawCube(this.transform.position,Vector3.one* 0.9f);
+  }
+
+}
+
+
+
+UnityEditor自制编辑器（二）Attribute
+
+Inspector直接改变数值： public
+
+修改用Attribute
+
+[HideInSpector]
+public float strength;
+[SerializedField]   private状态也能看得到
+
+
+摄像机追踪中OnDrawGizmos
+
+UnityEditor编辑器（三）Custom Inspector
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
