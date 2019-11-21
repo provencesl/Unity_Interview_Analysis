@@ -1,0 +1,30 @@
+三种实现方式:
+1)基于Sobel和色彩（Sobel Color）的实现，基于Sobel和深度纹理的实现（Sobel Depth）和基于Laplacian的深度加上法线（Laplacian Depth and Normal）的实现。
+
+
+边缘检测都是在Pixel(Fragment) Shader实现，Vertex Shader不需要处理。
+
+
+Sobel Color:
+给模型上不同颜色的边界都描边，2D中较为常见。
+
+
+
+描边效果 由简入深来说：
+
+1）实现思路：  判断像素周围是否有透明度为0的值，如果有则表明像素处于边缘位置。
+
+Tags{
+     "Queue" = "Transparent"
+}
+Blend SrcAlpha OneMinusSrcAlpha
+
+主要处理的就是片元着色器。
+
+fixed frag(v2f i):SV_Target
+
+
+
+
+
+
