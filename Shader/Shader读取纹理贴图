@@ -1,0 +1,43 @@
+Shader "Shader/BaseTexture"
+{
+  Properties
+  {
+    _BaseColor("BaseColor",color) = (1,1,1,1)
+    
+    //定义2D纹理属性
+    _BaseMap("BaseMap",2D) = "white"{}
+    
+  }
+  
+  
+  SubShader
+  {
+    Tags{"RenderType"="Opaque"}
+    LOD 100
+    
+    Pass
+    {
+      CGPROGRAM
+      #pragma vertex vert
+      #pragma fragment frag
+      
+      #include "UnityEngine.cgine"
+      
+      half4 _BaseColor;
+      sampler2D _BaseMap; //声明2D纹理采样器
+      float4 _BaseMap_ST; //纹理对应的缩放和偏移参数：xy为缩放，zw为偏移， 格式：纹理名_ST
+      
+      
+    
+    
+    }
+    
+    
+  
+  }
+
+
+}
+
+参考链接;https://blog.csdn.net/u013746357/article/details/92570102
+
