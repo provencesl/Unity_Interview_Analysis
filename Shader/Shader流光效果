@@ -1,0 +1,20 @@
+游戏Logo看到流光效果，实现方案即为：带有光条的图片UV根据时间进行移动，然后和原图进行叠加实现。
+
+
+基础版本：
+
+Shader "UICamera/ImageFlashEffect"
+{
+  Properties
+  {
+    _MainTex("Main Texture",2D) = "white"{}
+    _LightTex("Login Texture",2D) = "white"{}
+    
+    
+    
+    
+    
+  }
+
+
+}
