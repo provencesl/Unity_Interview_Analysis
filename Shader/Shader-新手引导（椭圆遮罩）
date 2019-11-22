@@ -1,0 +1,13 @@
+实现思路：
+
+遮挡点击可以利用Image组件的RaycastTarget.只有透明部分让鼠标可以穿透,就可以复写Image的IsRaycastLocationValid方法.计算是否点击在椭圆内。
+
+//对图片进行Mask处理,只有椭圆部分
+Shader "Unlit/Transparent Colored Mask UnRound"
+{
+  
+
+
+
+
+}
