@@ -1,0 +1,12 @@
+通常来说，渲染半透明物体，使用透明度混合。
+
+
+需要注意的几点：
+1）设置标签：Tags{ "Queue"="Transparent" "IgnoreProjector"="True" "RenderType"="Transparent"}
+将物体放入渲染队列
+
+2.关闭深度写入：ZWrite Off
+具体原因见下面
+3.Blend混合命令：Blend SrcAlpha OneMinusSrcAlpha
+
+意思是：最终颜色 = 源颜色(该像素颜色) * SrcAlpha + 目标颜色(颜色缓冲中的颜色) * (1 - SrcAlpha)
