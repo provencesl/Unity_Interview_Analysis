@@ -1,0 +1,34 @@
+Unity2d Shader ：
+
+1）UI Shader
+2)Screen Shader 屏幕后处理
+3）Sprite Shader 精灵着色器
+
+
+
+扭曲： 扰动一个物体的UV坐标，表现效果几位扰动效果，比如：火焰扭曲，水波等
+
+1）Shader中需要当前渲染的纹理
+2）给物体渲染并且使用当前纹理，用屏幕坐标作为UV坐标加上扰动值
+
+
+
+
+
+
+
+Shader 2D 扭曲
+
+fixed frag(v2f i):SV_Target
+{
+  float2 uv = i.uv;
+  
+  //uv扭曲代码
+  
+  
+
+}
+
+UV扰动：是对一张噪声纹理采用加上偏移值，同时让噪声纹理做UV移动。达到每次采用不同来实现动态的效果。
+
+
