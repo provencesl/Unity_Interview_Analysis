@@ -1,0 +1,34 @@
+网络消息报：
+
+Packet:
+
+public class Packet : IDisposable
+{
+  public int ptr; //数据读写的游标指针
+  public int length; //所占位数
+  public byte[] data;  //字节数组，读写数据都在这
+  
+  public Packet(byte[] array) : this(array,array.Length)
+  {}
+  
+  public Packet(byte[] array,int size)
+  {
+    ptr = 0;
+    data = array;
+    length = size << 3;
+  }
+  
+  
+  //每个数组类型的写入都是讲一个字节按照指定位数从某个位置开始写
+  public void WriteByteAtPtr(byte value,int bits)
+  {
+    if(bits > 0)
+    {
+     
+    }
+  
+  }
+  
+  
+
+}
