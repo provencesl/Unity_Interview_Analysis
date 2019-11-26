@@ -1,0 +1,18 @@
+Ray:
+
+//返回一条射线Ray从摄像机到屏幕指定的一个点
+Ray Camera.main.ScreenPointToRay(Vector3 pos); 
+
+
+
+
+
+RaycastHit: 用于存储发射射线后产生的碰撞信息。
+常用的成员变量如下：Collider和射线发生碰撞的碰撞器
+
+distanace:从射线七点到射线和碰撞器交点的距离
+normal:射线射向平面的法向量
+point:射线和碰撞器交点的坐标：Vector3对象
+
+通常需要提前声明RaycastHit对象
+
