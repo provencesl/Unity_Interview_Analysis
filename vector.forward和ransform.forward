@@ -9,6 +9,9 @@ Vector.forward:(0,0,1)
 //Vector3.Up:(0,1,0)
 
 使用Transform.translate()时，Vector3.forward和Transform.forward不同。
+推荐使用：
+transform.translate(Vecotr3.forward,Space.self); 沿着自身坐标系前进
+transform.translate(Vector3.forward,Space.world); 沿着世界坐标系前进
 
 
 
