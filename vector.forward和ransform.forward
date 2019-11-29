@@ -1,0 +1,17 @@
+物体朝自己的正前方运动：
+transform.translate(Vector3.forward*Time.deltaTime)
+
+朝向：
+
+//transform.Translate()中使用，如果不表明坐标系，则为物体的局部坐标，即物体的正前方
+Vector.forward:(0,0,1)   
+//Vecctor3.right:(1,0,0)
+//Vector3.Up:(0,1,0)
+
+使用Transform.translate()时，Vector3.forward和Transform.forward不同。
+
+
+
+
+
+
