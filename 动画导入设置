@@ -1,0 +1,13 @@
+Legacy:早起动画设置，不支持Animator，只可以使用Animation播放
+Generic:支持人性，非人形Model
+Humanoid:只支持人形Model
+
+
+
+动画类型：Animation Type:
+Generic:点击后生成一个动画和骨骼映射（Humanoid一样）
+
+Avatar Definition:骨骼映射
+Create From This Model:使用此Model创建骨架
+Copy From Other Avatar:使用其他骨骼
+Optimize(优化) Game Objects:是否优化游戏物体，在发布游戏时勾选
