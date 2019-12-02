@@ -1,0 +1,25 @@
+[HideInInspector]
+
+[NoScaleOffset]
+隐藏纹理数据格式（3D/2D/Cube）的倾斜、偏移字段:Tilling或Ofset
+
+[Normal]
+
+[PerRendererData]:纹理数据格式（3D/2D/Cube）
+目标的数据MaterialPropertyBlock类被初始化的实例值。
+主要在从脚本动态设置纹理数据时才被使用。
+
+
+
+滑动条
+[PowerSlider]:数值在一定范围内移动
+PowerSlider()
+
+示例：
+Properties
+{
+  [PowerSlider(0.5)]_PosX("PositionX",Range(0.01,1)) = 0
+  _PosY("positionY",Range(0.01,1)) = 0
+  [PowerSlider(2.0)]_PosZ("PositionZ",Range(0.01,1)) = 0
+
+}
