@@ -1,3 +1,32 @@
+着色器：其实就是描述顶点和像素特征的程序。
+
+整个着色器渲染流程：
+
+Mesh Info
+(Vertices,UVs)
+||
+Vertex Shader
+(Places Vertices On the Screen):场景中绘制顶点空间
+||
+Pixel Shader
+(Render Mesh)：在空间中描绘Mesh
+
+顶点着色器每个顶点运行一次，并且设置对象在屏幕上的位置。还准备了像素着色器接下来要使用的数据（如UV）
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 Shader "ShaderTutorial/BaseColor" // Shader在面板上显示的名称
 {
 	/*
