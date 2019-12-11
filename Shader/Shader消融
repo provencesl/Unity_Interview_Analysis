@@ -98,10 +98,54 @@ Shader"Unity Shader/Simple Shader"{
 
 
 
-消融原理：
+消融原理：[Discard]
 1)使用噪声和透明度测试、
 从噪声图中读取某个通道的值。
-然后使用该值进行透明度测试。
+然后使用该值进行透明度测试。\
+
+
+
+
+
+
+
+
+
+///////开放变量
+
+Shader "Custom/Dissolve Shader"
+{
+  Properties
+  {
+    _NoiseTex("Noise",2D)= "white"{} //Noise噪声贴图
+    _RampTex("Ramp",2D) = "black"{} //渐变贴图
+    _Dissolve("Dissolve",Range(0,1)) = 0 //消融贴图
+    _Emission("Emission",float) = 1    //自发光贴图
+    
+    
+    
+    
+  }
+
+}
+
+
+
+///////设置渲染标签
+SubShader
+{
+  Tags
+  {
+    "RenderType" = "Opaque"
+    "Queue" = "AlphaTest"
+  }
+  
+  LOD 200
+}
+//模型为透明，渲染类型Opaque
+//通过剔除渲染的方式实现消融，把渲染队列放在AlphaTest之中
+
+
 
 
 核心代码：
@@ -110,5 +154,20 @@ cli(cutout - _Threshold);
 
 主要是利用自己的规则决定是否剔除某像素点，既然针对像素点，自然需要处理片元着色器。
 提取像素需要使用UnityShder的clip() . [clip如果输入向量的任何元素小于0，则丢弃当前像素]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
