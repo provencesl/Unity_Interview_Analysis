@@ -1,0 +1,37 @@
+
+需要对存储的类进行序列化：
+[System.Serializable]
+public class Item
+{
+  public string itemName;
+  public string itemDesc;
+  public int itemID;
+  public int goldValue;
+  public float power;
+
+}
+
+需要进行J序列化：使用LitJson
+
+public static class JsonUtil
+{
+ 
+  public static string ToJson<T>(T obj)
+  {
+    
+    
+  }
+  
+  
+  
+  
+  
+
+
+
+
+
+}
+
+
+
