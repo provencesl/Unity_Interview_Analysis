@@ -1,0 +1,32 @@
+将多个游戏对象（Prefab）或者二进制文件封装到AssetBundle中，提供封装和解包方法。
+
+
+
+1）预设：
+
+  Assetbundle可以将Prefab封装成AssetBundle，因为Prefab可以将游戏对象
+ ，游戏脚本，材质封装在一起，当从服务器上将Assetbundle下载后直接Instantiate可以放入游戏。
+ 
+ Prefab打包技巧：
+ Prefab打包和关联的Prefab数量是无关的。
+ 
+ 
+ 1)AssetBundle打包：
+ 无论是模型FBX资源还是UI资源，最好先放在Prefab，然后再做成AssetBundle。
+ 以模型来说，
+ AssetBundle中可以存放多个模型。
+ 比如：两个完全一样的模型，但是身上绑定的脚本不一样，需要两个模型放在不同Prefab。
+ 
+ 将这两个Prefab打包，两个相同的Prefab放在一起打包会占用1M空间，
+ 而且将他们分别打包会占用1+1 =2 M空间。Preefab打包时会将模型身上的所有材质，贴图和脚本全部包含进去。
+ 
+ 将相同的模型尽量打包再一起，公用一套资源文件。
+ 所以，将不同模型尽量分开打包，相同模型具有不同脚本、组件的话将他们放在不同prefab之中，
+ 最后将Prefab打包进AssetBundle。
+ 
+ 
+ 
+
+ 
+
+
