@@ -1,0 +1,18 @@
+1）AsyncLoading: 内存加载-异步加载
+
+从内存加载：
+AssetBundle.LoadFromMemoryAsync(File.ReadAllBytes(path1))
+
+
+2)  SyncLoading:内存加载-同步加载（无需协程）
+从内存中加载： 无需使用协程，直接完成资源加载
+
+AssetBundle.LoadFromMemory(File.ReadAllBytes(path1))
+
+3)LoadFromFile:本地加载
+AssetBundle.LoadFromMemory(File.ReadAllBytes(path1))
+
+4）LoadFromWWW:从本地/服务器加载
+AssetBundle.LoadFromMemory(File.ReadAllBytes(path1));
+
+
