@@ -1,0 +1,35 @@
+Lambda表达式：
+
+
+
+1)表达式Lambda：
+
+泛型集合List<T>中的Find（）用于查找集合中符合指定条件的元素。
+相比foreach便利元素，使用Find()查找，代码更加简洁。
+
+函数原型：public T Find(Predicate<T> match)
+其中，Predicate为C#定义号的委托，原型如下：
+public delegate bool Predicate(T)(T obj)
+
+
+
+List.Find()的入参match,就是一个返回值为Bool的，入参为T类型函数。
+
+List<Person> list = new List<Person>();
+
+//Person p = list.Find();
+
+//匿名函数
+Person p = list.Find(delegate(Person s){
+  return s.Name.Equals("wang");
+})
+
+//Lambda表达式
+Person p = list.Find(s=>{
+  return s.Name.Equals("赵")
+});
+//Lambda表达式简洁写法
+Person p = list.Find(s=>s.Name.Equals("赵"));
+
+
+
