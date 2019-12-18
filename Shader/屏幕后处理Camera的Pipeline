@@ -1,0 +1,9 @@
+1）Pipeline中的深度数据：
+
+深度是渲染管线当中的重要概念，控制这三维世界中物体渲染的遮挡关系。
+
+以传统的forward render为例，三角形提交drawcall,顶点进入vertex shader,
+经过model-view-projection matrix，变换到齐次裁剪空间坐标系，
+通过透视出发，进入pixel Shader。
+
+
