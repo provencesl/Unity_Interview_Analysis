@@ -1,0 +1,32 @@
+屏幕坐标通过ComputerScreenPos获取：
+
+ComputeScreenPos在UnityCG.cgine中被定义
+首先，在顶点着色器中将ComputeScreenPos的结果保存在输出结构体之中。
+然后再片元着色器中进行一个齐次除法运算后得到视口空间中的坐标。
+
+
+
+struct vertOut
+{
+  float4 pos:SV_POSITION;
+  float4 scrPos:TEXCOORD0;  
+}
+
+vertOut vert(appdata_base v)
+{
+  vertOut o;
+  o.pos = mul(UNITY_MATRIX_MVP,v.vertex);
+  //第一步：把ComputeScrenPos的结果保存到scrPos之中
+  o.scrPos = ComputeScreenPos(o.pos);
+  return o;
+}
+
+fixed4 frag(vertOut i):SV_Target
+{
+  //第二步：用scrPos.xy除以scrPos.w得到视口空间的坐标
+  float2 wcoord = (i.scrPos.xy/i.scrPos.w);
+  return fixed4(wcoord,0.0,1.0);
+}
+
+参考链接：
+https://www.bbsmax.com/A/kmzLbmbG5G/
