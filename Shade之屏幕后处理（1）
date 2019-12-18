@@ -1,0 +1,74 @@
+双摄像机分别渲染彩色主角和黑白环境:
+
+渲染环境的camera:
+
+获得摄像机画面之后再套上灰度公式化成黑白色
+
+Shader "Myuse/FogGreyShader"
+{
+  Properties
+  {
+    _MainTex("Texture",2D) = "white"{}
+    
+  }
+  
+  SubShader
+  {
+    Tags
+    {
+      "RenderType" = "Opaque"
+    }
+    LOD 100
+    
+    Pass
+    {
+      CGPROGRAM 
+      #pragma vertex vert
+      #pragma fragment frag
+      
+      
+      #include "UnityCG.cginc"
+      struct appdata
+      {
+        float4 vertex:POSITION;
+        float2 uv:TEXCOORD0;
+      };
+      
+      struct v2f
+      {
+        float2 uv:TEXCOORD0;
+        float4 vertex:SV_POSITION;
+        float4 scrPos:TEXCOORD1;
+      };
+      
+      sampler2D _MainTex;
+      float4 _MainTex_ST;
+      
+      v2f vert(appdata v)
+      {
+        v2f o;
+        o.vertex = UnityObjectToClipPos(v.vertex);
+        o.uv = TRANSFORM_TEX(v.uv,_MainTex);
+        o.scrPos = ComputeScreenPos(o.vertex);
+        return o;
+      }
+      
+      fixed frag(v2f i):SV_Target
+      {
+        //灰度grey
+        fixed selfColor = tex2Dproj(_MainTex,i.scrPos);  //原色
+        float gray = (selfColor.r * 30 + selfColor.g * 59 + selfColor.b * 11 + 50)/ (100); //灰度转化公式
+        fixed4 c = fixed4(gray,gray,gray,1);
+        return c;
+      }
+      
+      ENDCG
+    }
+
+  }
+}
+
+
+
+
+
