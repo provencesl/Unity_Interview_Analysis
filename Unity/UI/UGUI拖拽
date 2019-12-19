@@ -1,0 +1,9 @@
+最简洁版本：
+public class Drag : MonoBehaviour,IDragHandler,IPointerDownHandler
+{
+    
+
+
+}
+
+
