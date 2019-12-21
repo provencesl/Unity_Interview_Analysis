@@ -1,0 +1,16 @@
+Unity：
+
+_Time: float4 从场景加载开始经历的时间
+_SinTime:float4 时间的正弦值
+_CosTime:float4 t是时间的余弦值
+
+
+Properties
+{
+  _Color("Color",Color) = (1,1,1,1)
+  _MainTex("Sequence Image",2D) = “white”{}
+  _Speed("Speed",Range(1,100)) = 50
+  
+  
+
+}
