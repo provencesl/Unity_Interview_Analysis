@@ -1,0 +1,54 @@
+高斯模糊的实现：
+
+思路：GrabPass实现毛玻璃[性能消耗太大，不适合在移动端使用]
+
+从FrameBuffer抓取物体所在位置屏幕中将要绘制的内容，将其填充进入一个临时的texture，
+以供同一个Shader中气候的Pass使用。
+
+Shader声明的属性：
+
+
+Properties
+{
+  _BumpAmt("Distortion",range(0,2)) = 1
+  TintAmt("Tint Amount",Range(0,1)) = 0.1
+  _TintColor("Tint Color",Color)) = (1,1,1,1)
+  _MainTex("Tint Texture(RGB)",2D) = "white"{}
+  _BumpMap("Normalmap",2D) = "bump"{}
+  _BlurAmt("Blur",Range(0,10)) = 1
+  
+
+}
+
+
+
+移动端使用CommandBuffer:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+思路：采用三个通道各司其职
+1）通道0：降低采样通道
+2）通道1：垂直方向模糊处理通道
+3）通道2：水平方向模糊处理通道
+
+
