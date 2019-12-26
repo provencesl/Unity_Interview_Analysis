@@ -1,0 +1,14 @@
+Rigidbody.Velocity:
+
+瞬间为物体添加一个恒定的速度，将物体提升到该速度。
+
+Rigidbody.addForce:
+
+瞬间给物体一个力
+
+
+
+
+
+
+
