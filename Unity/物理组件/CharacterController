@@ -1,0 +1,34 @@
+MyCharacterController_1:
+
+public class MyCharacterController : MonoBehaviour
+{
+  public float speed = 6f;
+  public float jumpSpeed = 8f;
+  
+  public CharacterController controller;
+  
+  private Vector3 moveDir = Vector3.zero;
+  
+  void Start()
+  {
+    controller = GetComponent<CharacterController>();
+    
+  }
+  
+  void Update()
+  {
+    if(controller.isGrounded)
+    {
+     
+    
+    }
+  }
+
+
+}
+
+
+==============================================================
+
+MyCharacterController_2:
+
