@@ -1,0 +1,31 @@
+顶点着色器输入：
+
+POSITION[n]:位置
+TEXCOORD[n]:纹理坐标
+
+
+顶点着色器输出：
+POSITION[n]:位置
+FOG[n]:雾融合值
+COLOR[n]:顶点颜色
+TEXCOOR[]n:顶点纹理坐标
+
+
+
+struct adddata
+{
+  float4 vertex:POSITION;      //顶点坐标
+  float2 uv: TEXCOORD0;        //纹理uv坐标系的第0个集合
+}
+
+
+
+
+
+
+
+
+
+
+
+
