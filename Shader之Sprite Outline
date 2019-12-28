@@ -1,0 +1,60 @@
+Shader "Unit/InnerSpriteOutline"
+{
+  Properties
+  {
+    _MainTex("Texture",2D) = "white"{}
+    
+    _OutlineColor("Outline Color",Color) = (1,1,1,1)
+  }
+  
+  SubShader
+  {
+    Tags
+    {
+      "RenderType" = "Transparent"
+    }
+    
+    Pass
+    {
+      CGPROGRAM
+      #pragma vertex vert
+      #pragma fragment frag
+      
+      
+      
+      #include "UnityCG.cgine"
+      
+      struct appdata
+      {
+        float4 vertex:POSITION;
+        float2 uv:TEXCORRD0;
+      }
+      
+      struct v2f
+      {
+        float2 uv:TEXCOORD0;
+        FLOAT4 VERTEX: SV_POSITION;
+      
+      }
+      
+      sampler2D _Maintex;
+      float4 _MainTex_ST;
+      float4 _MainTex_TexelSize;
+      
+      float4 _OutlineColor;
+      
+      
+      
+      
+      
+      
+    
+    }
+    
+    
+  
+  }
+  
+
+
+}
