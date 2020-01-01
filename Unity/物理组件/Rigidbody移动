@@ -1,0 +1,22 @@
+Rigidbody进行移动的基础方法：
+1）Position
+2) Velocity
+3) AddFoce
+4) MovePositon
+
+Position:
+rigidbody.position = Vector3.forward * 0.1f;
+
+//不适用transform.position，因为transform.position是瞬间移动坐标
+
+Velcity:
+rigidbody.velocity = Vector3.forward * 0.1f;
+
+
+AddForce:
+rigidbody.AddForce(Vector3.forward * 0.1f);
+ForceMode.Force: 持续的 ，考虑质量
+Impulse.Force:瞬间的，考虑质量
+Acceleration.Force:持续的，无视重量
+VelocityChange.Force:瞬间的，无视重量
+
