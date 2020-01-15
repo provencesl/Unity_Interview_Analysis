@@ -2,6 +2,46 @@ Prototype原型设计模式：用于创建重复的对象，同时还需要保�
 
 实现一个原型接口，用于创建当前对象的克隆。
 
+原型模式就是使用原型指定创建对象的种类，并且通过拷贝这些原型创建新的对象。
+简而言之，就是从一个对象再次创建另外一个可定制对象，而且不需要直到任何的创建细节。
+
+比如：地图中很多怪物之间具有共通性，这些怪物都是以基类怪物为父本克隆的子类物体。
+
+此处以武器为例子：
+
+public abstract class Sword
+{
+  protected string Name;
+  protected int Atk;
+  protected int Speed;
+  
+  public Sword()
+  {
+    Name = _Name;
+    Atk = _Atk;
+    Speed = _Speed;
+    
+    
+  }
+  
+  public abstract Sword Clone();
+  
+  
+  
+
+}
+
+
+
+
+使用场景：
+1）类初始化较多资源
+2）构造函数比较复杂
+3）循环体中产生大量对象
+
+
+
+
 
 
 
