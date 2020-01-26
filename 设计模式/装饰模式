@@ -1,0 +1,98 @@
+装饰模式就是：动态的给一个对象添加更多的职责。
+相比较而言，装饰者模式相比较子类来说更加灵活。
+
+
+装饰者模式四个角色：
+1）抽象构件【被装饰的一类对象Component】，给出一个抽象接口，规范被添加职责的对象。
+2）具体构件【具体要被装饰的对象ConcreteComponent】角色，定义一个将要接收附加责任的具体对象
+3）装饰抽象类【Decorator】：持有一个构件对象的实例
+4）具体装饰对象
+
+
+使用场景：
+1）扩展一个类的功能或者为一个类增加职责
+2）
+
+
+public abstract class Weapon
+{
+  //攻击方法
+  public abstract void Attack();
+  
+}
+
+
+//装饰者基类
+public abstract class Decorator : Weapon
+{
+  private Weapon _weapon;
+  
+  public Decorator(Weapon weapon)
+  {
+    this._weapon = weapon;
+  }
+
+  public override void Attack()
+  {
+    weapon.Attack();
+  }
+
+
+}
+
+public class Sword : Weapon
+{
+
+  public override void Attack()
+  {
+    Debug.Log("剑普攻");
+  }
+
+}
+
+public class RedDiamond　：Decorator
+{
+  public RedDiamond(Weapon weapon) : base(weapon)
+  {
+  
+  }
+  
+  private void Dizziness()
+  {
+    Debug.log("眩晕");
+  }
+  
+  public override void Attack()
+  {
+    base.Attack();
+    Dizziness();
+  }
+  
+
+}
+
+public class BlueDiamond : Decorator
+{
+  public BlueDiamond(Weapon weapon) : base(weapon)
+  {}
+  
+  public override void Attack()
+  {
+    base.Attack();
+    Frozen();
+  }
+  
+  private void Frozen()
+  {
+    Debug.log("冰冻");
+  }
+  
+
+}
+
+
+
+
+
+
+
