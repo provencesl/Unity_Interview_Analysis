@@ -1,0 +1,78 @@
+策略模式其实实质就是根据不同的对象选择不同的方法。
+主要就是把变化的部分封装起来，首先，需要找到代码中频频发生变化的地方。
+
+将行为封装起来，吧变化部分的影响分割开来。
+
+
+当一个对象有着很多行为，如果不使用合理模式就会使用多重的if-else来实现，
+而使用策略模式，把这些行为转移到相应的具体策略类当中，就可以避免使用多重条件选择语句，
+体现面向对象。
+
+
+缺点是多个行为会导致生成多个类。
+  
+public interface Comparator
+{
+  public int compare(Human h1,Human h2);
+}
+
+public class AgeComparator implements Comparator
+{
+  public int compare(Human h1,Human h2)
+  {
+    if(h1.age > h2.age)
+      return 1;
+    else if(h1.age == h2.age)
+      return 0;
+    else
+      return -1;
+  
+  }
+  
+}
+
+public class HeightComparator implements Comparator
+{
+  public int compare(Human h1,Human h2)
+  {
+    if(hq.height > h2.height)
+      return;
+    else if(h1.height == h2.height)
+      return 0;
+    else 
+      return -1;
+  }
+}
+
+
+
+public class Context()
+{
+  Comparator com;
+  
+  public void SetStrategy(Comparator com)
+  {
+    this.com = com;
+  }
+
+  public Comparator GetCom(Comparator com)
+  {
+    com.compare();
+  }
+
+  
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
