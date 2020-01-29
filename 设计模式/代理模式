@@ -1,0 +1,38 @@
+代理模式大多数用来优化资源的加载：
+1）当资源已经加载过时，使用原来的资源
+2）当资源没有加载时，开始加载
+所有过程由代理模式控制
+
+abstract class Component
+{
+  public abstract void Add(Component c); //增加成员
+  public abstract void Remove(Component c);//删除成员
+  public abstract Component GetChild(int i);//获取成员
+  public abstract void Operation(); //业务方法
+  
+
+}
+
+public class Leaf : Component
+{
+  public override void Add(Component c)
+  {
+    //异常处理或者错误提示
+  }
+  
+  
+  
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
