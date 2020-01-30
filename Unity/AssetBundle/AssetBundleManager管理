@@ -1,0 +1,149 @@
+public class AssetBundleManager
+{
+  public static AssetBundleManager Instance
+  {
+    get
+    {
+      if(_instance == null)
+        _instance = new AssetBundleManager();
+        return _instance;
+    }
+    
+    private static AssetBundleManager _instance = null;
+    
+    private AssetBundleManiest maniest = null;
+    
+    //存储待加载的AssetBundle集合
+    private Dictionary<string,AssetBundle> dicAssetBundles = new Dictionary<string,AssetBundle>();
+    
+    
+    //fileName:Assets全路径，比如：Assets/Prefab/**.prefab
+    public AssetBundle GetAssetBundle(string filePath)
+    {
+        AssetBundle ab = null;
+        dicAssetBundle.TryGetValue(AssetsNameToBundleName(filePath));
+        return ab;
+      
+    }
+    
+    private string AssetsNameToBundleName(string file)
+    {
+      string f = file.Replace('/','.');
+      f = f.ToLower();
+      f += ".assetbundle";
+      return f;
+    }
+    
+    public IEnumerator LoadAsync(string fileName)
+    {
+      string bundleName = AssetsNameToBundleName(filename);
+      if(dicAssetBundle.ContainsKey(bundleName))
+      {
+        yield break;
+      }
+      
+      string[] dependence = manifest.GetAllDependencies(bundleName);
+      for(int i = 0;i < dependence.Length;i++)
+      {
+        yield return LoadInternalAsync(dependence[i]);
+      
+      }
+      
+      yield return LoadInternalAsync(bundleName);
+      
+      
+    }
+    
+    public void Unload(string fileName,bool force = false)
+    {
+      string bundleName = AssetsNameToBundleName(fileName);
+      AssetBundle ab = null;
+      if(dicAssetBundle.TryGetValue(bundleName,out ab) == false)
+        return;
+        
+      if(ab == null)
+        return;
+        
+        
+      
+    }
+    
+    //从缓存中加载
+    private AssetBundle LoadInternal(string bundleName)
+    {
+      if(dicAssetBundle.ContainsKey(bundleName))
+      {
+        return dicAssetBundle[bundleName];
+      }
+     
+      //同步加载
+      AssetBundle bundle = AssetBundle.LoadFromFile(bundleName);
+      dicAssetBundle.Add(bundleName,bundle);
+      return bundle;
+    
+    }
+
+    
+    private IEnumerator LoadInternalAsync(string bundleName)
+    {
+      if(dicAssetBundle.ContainsKey(bundleName))
+        yield break;
+      
+      //异步加载
+      AssetBundleCreateRequest req = AssetBundle.LoadFromileAsync()
+      yield return req;
+      
+      dicAssetBundle.Add(bundleName,req.assetBundle);
+    
+    
+    }
+    
+    private void Release()
+    {
+      foreach(var pair in dicAssetBundle)
+      {
+        var bundle = pair.Value;
+        if(bundle != null)
+        {
+          //卸载资源
+          bundle.Unload(true);
+          bundle = null;
+        }
+      
+      dicAssetBundle.Clear();
+      }
+    
+    }
+    
+    
+    private string MainifestFilePath()
+    {
+      return Application.dataPath + "/StreamingAssets";
+    }
+    
+    
+    public void UnLodUnUsedAssets()
+    {
+      Resources.UnLoadUnUsedAssets();
+      System.GC.Collect();
+    }
+    
+    
+    
+    
+    public void LoadManifest()
+    {
+      AssetBundle bundle = AssetBundle.LoadFromFile(MainifestilePath());
+      bundle.LoadAsset<AssetBundleManifest>("AssetBundleManiest")
+    }
+    
+    //AssetBundle动态加载避免使用WWW
+    private string BundleNameToBundlePath(string bundleFileName)
+    {
+      return System.IO.Path.Combine(Application.dataPath + "/StreamingAssets/",bundleFileName);
+    }
+    
+    
+  }
+
+}
