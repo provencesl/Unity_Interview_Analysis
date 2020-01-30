@@ -1,0 +1,75 @@
+public struct AssetCiteData
+{
+  public AssetBundle AssetObj;
+  public int iCiteCount;
+  public bool bLoadFinish;
+  
+  static public AssetCiteData Default()
+  {
+    AssetCiteData Asset;
+    Asset.AssetObj = null;
+    Asset.iCiteCount = 0;
+    Asset.bLoadFinish = false;
+    return Asset;
+  }
+  
+}
+
+
+
+public class AssetManager : MonoBehaviour
+{
+  private AssetBundle _MainAssetBundle;
+  private AssetBundleManiest _MainAssetBundleManiest;
+  
+  private Dictionary<string,AssetCiteData> dicCiteData = new Dictionary<string,AssetCiteData>();
+
+  
+  //引用对象信息
+  private AssetCiteData GetAssetCiteIno(string path)
+  {
+    if(dicCiteData.ContainsKey(path))
+      return dicCiteData[path];
+      return dicCiteData.Add(path,data);
+  }
+  
+  //在缓存中增加对象信息
+  private void AddAssetCiteData(string path,AssetCiteData data)
+  {
+    if(!dicCiteData.ContainsKey(path))
+      dicCiteData.Add(path,data);
+  
+  }
+  
+  //引用对象信息是否存在
+  private bool HasAssetCite(string path)
+  {
+    return dicCiteData.ContainsKey(path);
+  }
+  
+  
+  //加载资源
+  private Object LoadAsset(string path,Type type,bool is_dependencies = false)
+  {
+      path = path.Replace(".","_");
+      AssetBundle ab = null;
+      
+      
+  
+  }  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
+}
