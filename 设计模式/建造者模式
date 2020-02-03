@@ -9,10 +9,10 @@
 
 
 建造者模式：
-1）Builder(抽象建造者)
-2）ConcreteBuilder(具体建造者)
-3）Product(产品)
-4）Director(指挥者)
+1）Builder(抽象建造者)，用来定义构建物件过程必要的步骤
+2）ConcreteBuilder(具体建造者)，实际用来构建物件的类别
+3）Product(产品)，最终要被构建的物体的类别
+4）Director(指挥者)，负责指挥ConcreteBuilder如何构建物体
 
 
 Product:
@@ -237,6 +237,119 @@ public class ActorController
     
   }
 }
+
+
+
+
+====================================================================================
+
+//建设模式的应用： JDK的StringBuilder
+
+StringBuilder是一个具体建造者类，继承一个抽象的继承类。
+
+AbstractStringBuilder并且使用final 修士不允许被继承，在此类中可以看做很多和构件字符串的有关
+方法。
+
+
+
+
+
+====================================================================================
+
+public class Product
+{
+  private String attr1;
+  private String attr2;
+  private String attr3;
+  
+  //...
+  //Getter And Setters...
+  
+  @Override 
+  public String ToString()
+  {
+    return this.getClass().getSimpleName();
+  }
+  
+
+}
+
+public interace Builder
+{
+  public Builder buildAttr1();
+  public Builder buildAttr2();
+  
+  public Product build();
+}
+
+public class ConcreteBuilder implements Builder
+{
+  private Product product;
+    
+  public ConcreteBuilder()
+  {
+  
+  }
+  
+  @Override
+  public Builder buildAttr1()
+  {
+      
+  }
+  
+  @Override
+  public Builder buildAttr2()
+  {
+  
+  }
+  
+  
+  
+  
+  
+  
+
+}
+
+
+
+
+public class Director
+{
+  private Builder builder;
+  
+  public Director(Builder builder)
+  {
+    this.builder = builder;
+  }
+  
+  public Product construct()
+  {
+    return builder.buildAttr1().buildAttr2().buildAttr3().build();
+  }
+  
+  
+}
+
+
+
+public class Main
+{
+  
+  public static void main(String[] args)
+  {
+    Builder concreteBuilder = new ConcreteBuilder();
+    Director director = new Director(concreteBuilder);
+    Product product = director.construct();
+    
+  }
+
+}
+
+
+
+
+
 
 
 
