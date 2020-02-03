@@ -1,0 +1,298 @@
+优点：
+1）使用建造者模式科室的客户端相似不知道产品内部细节
+2）具体的建造者类之间相互独立，利于系统扩展
+3）具体的建造者相互独立，因此可以对建造过程逐步细化
+
+
+缺点：
+1）建造者模式创建的产品一般具有较多的共同点，组成部分
+
+
+建造者模式：
+1）Builder(抽象建造者)
+2）ConcreteBuilder(具体建造者)
+3）Product(产品)
+4）Director(指挥者)
+
+
+Product:
+
+class Product
+{
+  //定义部件
+  private string partA;   
+  
+  private string partB;
+  private string partC;
+  
+  public string PartA
+  {
+    get
+    {
+      return partA;
+    }
+    set
+    {
+      partA = value;
+    }
+  }
+  
+}
+
+//抽象建造者 
+abstract class Builder
+{
+   //创建产品对象
+   protected Product product = new Product();
+   
+   public abstract void BuildPartA();
+   public abstract void BuildPartB();
+   public abstract void BuildPartC();
+   
+   //返回产品对象
+   public Product GetResult()
+   {
+    return product;
+   }
+   
+}
+
+
+//典型的具体建造者
+public class ConcreteBuilder : Builder
+{
+  public override void BuildPartA()
+  {
+  
+  }
+
+  public override void BuildPartB()
+  {
+  
+  }
+  
+  public override void BuildPartC()
+  {
+    
+  }
+
+}
+
+
+
+
+
+class Director
+{
+  private Builder builder;
+  
+  public Director(Builder builder)
+  {
+    
+  }
+  
+  public void SetBuilder(Builder builder)
+  {
+  }
+  
+  public Product Construct()
+  {
+  
+  }
+  
+  
+  
+  
+
+}
+
+
+应用场景：
+1）角色扮演的属性随等级增加而不同
+
+//游戏角色类，充当复杂产品对象
+public class Actor
+{
+
+}
+
+//游戏角色建造者，充当抽象建造者
+public class ActorBuilder
+{
+
+
+}
+
+//英雄角色建造者，充当具体建造者
+public class HeroBuilder
+{
+
+}
+
+
+//天使角色建造者，充当具体建造者
+public class AngelBuilder
+{
+
+}
+
+//恶魔角色建造者，充当具体建造者
+public class DevilBuilder
+{
+
+}
+
+//角色控制器，充当指挥者
+public class ActorController
+{
+
+}
+
+//配置文件App.conig
+
+
+=======================================================
+
+
+abstract class ActorBuilder
+{
+  //
+  protected static Actor actor = new Actor();
+  
+  public abstract void BuildType();
+  
+  public abstract void BuildSex();
+  
+  public abstract void BuildCostum();
+  
+  public abstractt void BuildHairStyle();
+  
+  public static Actor Construct(ActorBuilder ab)
+  {
+    ab.BuildType();
+    ab.BuildSex();
+  }
+
+  public virtual bool IsBareHeaded()
+  {
+    return true; 
+  }
+  
+  public Actor CreateActor()
+  {
+    return actor;
+  }
+  
+  
+  
+
+}
+////
+
+
+public class DevilBuilder : ActorBuilder
+{
+  
+  public override void BuildType()
+  {
+  }
+  
+  public override void BuildSex()
+  {
+  }
+  
+  
+  public override void BuildFace()
+  {
+  }
+  
+  public override bool IsBareHeaded()
+  {
+    return true;
+  }
+  
+  
+  
+
+}
+
+
+
+////
+public class ActorController
+{
+  public Actor Construct(ActorBuilder ab)
+  {
+    Actor actor;
+    ab.BuildTpe();
+    
+    //
+    if(!ab.IsBareHeaded())
+    {
+      ab.BuildHairStyle();
+    }
+    
+    actor = ab.CreateActor();
+    return actor;
+    
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
