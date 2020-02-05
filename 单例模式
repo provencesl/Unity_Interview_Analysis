@@ -1,0 +1,54 @@
+懒汉模式：[检测无时才实例化，即外部什么时候调用什么时候new]
+1）提供私有化构造函数
+2）自行实例化
+3）提供唯一实例，并且对外提供全局静态接口
+
+public class Singleton
+{
+  private static Singleton _instance = null;
+  
+  private Singleton()
+  {}
+  
+  public static Singleton GetInstance()
+  {
+    if(_instance == null)
+      instance = new Singleton();
+    return _instance;
+  }
+
+
+}
+
+//饿汉模式：类加载时才实例化，并且创建单例对象
+
+1)类内部预先实例化唯一实例
+2）对外提供唯一访问接口（静态方法）
+3）私有构造函数
+
+ public class Singleton
+ {
+  private readonly static Singleton Instance = new Singleton();
+  
+  private Singleton()
+  {}
+  
+  public static Singleton GetInstance()
+  {
+    return Instance;
+  }
+  
+ 
+ }
+
+
+
+
+
+
+
+
+
+
+
+
