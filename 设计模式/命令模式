@@ -1,3 +1,38 @@
+GOF对于命令模式定义：
+
+1）将请求封装成为对象，将客户端的不同请求参数化，配合队列、记录复原
+来执行请求操作。
+
+定义简单分为两个部分：
+1）请求的封装
+2）请求的操作
+
+当类的参数过多时，会造成参数行也会增加，需要将参数行设置成类加以封装。
+
+请求的封装：将调用功能时所需的参数加以封装。
+
+
+请求的操作：当请求封装为对象时，那么请求对象可以被操作。
+储存：将请求对象放入数据结构之中进行排序、排队、搬移、删除等记录。
+记录：当一个请求对象执行后，可以先不删除，将其移入“已执行”数据容器内。
+      就可以知道系统过去执行命令的流程
+复原：延续上一项记录功能      
+
+
+实现的注意点：
+很多时候并不需要使用命令模式来封装：
+如：
+1）可以直接就执行
+2）无需等待
+3）返回的命令
+
+扩展：
+网络游戏之中，有些数据封包的管理，可能不会实现撤销操作，而侧重于执行和记录，
+通过记录了解玩家操作游戏时的行为。
+
+
+
+ 
 FPS中：
 
 if(Input.GetKeyDown(KeyCode.A))
@@ -50,6 +85,7 @@ namespace CommandPattern
 {
   public class InputHandler : MonoBehaviour
   {
+  
         
     
   }
@@ -59,12 +95,16 @@ namespace CommandPattern
 
 ////
 ////
-////
 public abstract class Command
 {
   protected float moveDis = 1f;
   public abstract void Excute(Transform boxTrans,Command command);
 }
+
+
+
+
+
 
 
 
