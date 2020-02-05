@@ -27,6 +27,281 @@
 应用场景：关卡系统
 
 
+======================================
+ 
+对关卡系统进行重构，所有关卡数据封装。
+
+封装信息根据需求而定：
+1）如果要出场的敌方角色设置、通关条件、下一关的记录，就是让每一关都是
+一个对象并加以管理。
+2）关卡系统是根据在这群对象中寻找“条件符合”的关卡，让玩家进入挑战。
+等到关卡完成，进入下一个条件符合的关卡。
+
+
+
+实现思路：
+1)解决请求的接受者对象：
+2）接受者对象之间的串接：
+3）请求自动转移传递：
+
+
+public abstract class IStateHandler
+{
+  protected IStateData m_StageData = null;
+  protected IStateScore m_StageScore = null;
+  protected IStageHandler m_NextHandler = null;
+  
+  
+  public IStateHandler SetNextHandler(IStageHandler NextHandler)
+  {
+    m_NextHandler = NextHandler;
+    return m_NextHandler;
+    
+  }
+  
+   public abstract void IsFinished();
+   public abstract void Reset();
+   public abstract void Update();
+   
+   //CheckStage()用来判断当前游戏所处关卡，返回一个IStageHandler引用给关卡系统
+   public abstract IStageHandler CheckStage();
+
+}
+
+public class NormalStageHandler : IStageHandler
+{
+  //设置分数和关卡数据
+  public NormalStageHandler(IStageScore stateScore,IStageData stageData)
+  {
+    m_StageScore = stageScore;
+    m_StageData = stageData;
+  }
+  
+  //设置下一关卡
+  public IStageHandler SetNextHandler(IStageHandler NextHandler)
+  {
+    m_NextHandler = NextHandler;
+    return m_NextHandler;
+  }
+  
+  
+  //确认关卡
+  public override IStageHandler CheckStage()
+  {
+    //分数是否足够
+    if(m_StageScore.CheckScore() == false)
+     return this;
+    //已经是最后一关
+    if(m_NextHandler == null)
+     return this;
+     
+    //确认下一个关卡
+    return m_NextHandler.CheckStage();
+   
+  }
+  
+  
+  public override void Update()
+  {
+   m_StageData.Update();
+  }
+  
+  public override void Reset()
+  {
+   m_StageData.Reset();
+  }
+  
+  public override bool Isinished()
+  {
+   return m_StageData.IsFinished();
+  }
+  
+}
+
+
+
+
+public abstract class IStageScore
+{
+ public abstract bool CheckScore();
+}
+
+public class StageScore : IStageScore
+{
+ private int count = 0;
+ 
+ private StageSystem m_StageSystem = null;
+ 
+ public StageScoreEnemyKilledCount(int killedCount,StageSystem theStageSystem)
+ {
+   m_EnemyKillCount = killCount;
+   m_StageSystem = theStageSystem;
+  }
+ 
+  //确认关卡分数是否达到
+  public override bol CheckScore()
+  {
+   return (m_StageSystem.GetEnemyKilledCount() >= m_EnemyKilledCount);
+  }
+ 
+}
+
+
+//关卡内容接口:
+将关卡内容呈现给玩家。
+关卡内容：
+1）敌人角色
+2）探索道具
+
+public abstract class IStageData
+{
+ public abstract void Update();
+ public abstract bool IsFinished();
+ public abstract void Reset();
+
+}
+
+//内容全部放在IStageData子类当中，并且通过GameLoop更新机制，让关卡顺利产生给玩家挑战。
+
+class StageData
+{
+ public ENUM_Enemy emEnemy = ENUM_Enemy.Null;
+ public ENUM_Weapon emWeapon = ENUM_Weapon.Null;
+ 
+ public bool bBorn = false;
+ 
+ public StageData(ENUM_Enemy emEnemy,ENUM_Weapon emWeapon)
+ {
+  this.emEnemy = emEnemy;
+  this.emWeapon = emWeapon;
+  
+ }
+ 
+ 
+ 
+
+}
+
+
+public class NormalStageData : IStageData
+{
+  private float m_CoolDown = 0;
+
+  private bool m_AllEnemyBorn = false;
+  
+  //常规关卡产生的敌人单位
+  private List<StageData> m_StageData = new List<StageData>();
+  
+  
+ 
+ 
+ 
+
+}
+
+
+public class StageSystem : IGameSystem
+{
+  public const int MAX_HEART = 3;
+  
+  
+  private IStageHandler m_NowStageHandler = null;
+  private IStageHandler m_RootStageHandler = null;
+  
+  
+  public StageSystem(PBaseDeense PBDGame):base(PBDGame)
+  {
+   Initialize();
+  }
+  
+  
+  public override void Initialize()
+  {
+    //设置关卡
+    //InitializeStageData(); 
+  
+    //指定第一个关卡
+    m_NowStageHandler = m_RootStageHandler;
+    m_NowStageLV = 1;
+  
+  }
+  
+  public override void Release()
+  {
+   base.Release();
+   
+   m_SpawnPosition.Clear();
+   m_SpawnPosition = null;
+    
+  
+  }
+  
+  public override vod Update()
+  {
+   //更新当前关卡
+   m_NowStageHandler.Update();
+   
+   //是否需要切换下一个关卡
+   if(PBGame.)
+   
+   
+  
+  }
+  
+  
+  
+  
+  
+  
+  
+  
+
+
+}
+
+
+//使用关卡对象来代替以前的旧方法，使得冗长写法获得改善。并且将关卡内容、过关条件类化，
+可使得关卡类型多种组合。
+
+
+       
+
+
+ 
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
