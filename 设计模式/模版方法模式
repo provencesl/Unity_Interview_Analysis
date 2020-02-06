@@ -1,0 +1,113 @@
+模版方法模式：
+
+
+实现模版方法，定义算法骨架，具体子类将重定义PrimitiveOperation
+以实现一个算法步骤。
+实现PrimitiveOperation以完成算法和特定子类步骤。
+应用场景：
+攻击：受击结算方法差异化实现
+
+抽象模版角色：
+定义一个或者多个抽象操作，以便让子类实现，这些抽象操作称之为基本操作。
+具体模版角色：
+实现父类所定义的一个或者多个抽象方法，每个AbstractClass可以由多个ConcreteClass与之对应，每个ConcreteClass都可以给出这些抽象方法
+的不同实现。
+
+//抽象类
+public abstract class AbstractClass
+{
+  ///放到子类中实现抽象行为
+  public abstract void PrimitiveOperation();
+  
+  //模版方法，给出逻辑骨架
+  //逻辑的组成是一些相应的抽象操作，由子类实现
+  public void TemplateMethod()
+  {
+    PrimitiveOperation();
+  }
+  
+}
+
+
+//具体类
+public class ConcreteClassA : AbstractClass
+{
+  //具体行为
+  public override void PrimitiveOperation()
+  {
+    Console.WriteLine("子类方法实现");
+  }
+
+}
+
+
+//模版方法模式优缺点
+
+模版方法模式优缺点：
+优点：
+1）实现代码复用
+2）灵活对应子步骤变化
+
+缺点：
+1）引入抽象类，如果具体实现过多，需要开发人员花费精力去梳理类间关系。
+
+
+public class Template
+{
+  protected Text BtnText;
+  protected Text mText;
+  protected Image image;
+  protected Action calBack;
+   
+   
+  protected Button btn;
+  
+  protected void Init(Transform transorm)
+  {
+    mBtnText = transform.Find("Button/Text").GetComponent<Text>();
+    
+    button = transform.Find("Button").GetComponent<Button>();
+  }
+  
+  protected virtual void Method()
+  {
+  }
+ 
+  public void TemplateMethod(Transorm transorm)
+  {
+    Init(transform);
+    Method();
+  }
+  
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   
+
+
