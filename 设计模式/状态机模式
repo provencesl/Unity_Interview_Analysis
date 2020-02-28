@@ -18,12 +18,93 @@
 
 
 
+===============
+再比如操作订单的时候，很明显的一点就是订单状态不可随即跳跃，必须注逐个过度。
+
+订单状态： 预定=》付款=》核对=》发货
+所有订单基类：
 
 
+public abstract class BaseOrderState{
+  
+  private StateContext context;
+  
+  public abstract void nextState(StateContext context);'
+  
+  public abstract void preState(StateContext context);
+
+  public abstract string getCurState();
+  
+  
+
+}
 
 
+具体状态类 -预定状态
 
+public class BookingState extends BaseOrderState{
 
+  private static BookingState _state;
+  public static BookingState getInstance()
+  {
+    if(_state == null)
+    {
+      _state = new BookingState();
+    }
+    return _state;
+  }
+
+@Override
+public void nextState(StateContext context)
+{
+  context.setState(PayState.getInstance());
+}
+
+@Override
+public void preState(StateContext context)
+{
+  System.out.println("返回订单状态");
+}
+
+@Override 
+public string getCurState(){
+  return BookingState.class.getName();
+}
+  
+  
+  
+
+}
+
+///////////
+
+状态管理类
+
+public class StateManage()
+{
+  private BaseOrderState state;
+  
+  public void setState(BaseOrderState state)
+  {
+    this.state = state;
+  }  
+  
+  public void nextState()
+  {
+    this.state.nextState(this);
+  }
+  
+  public void preState(){
+    this.state.preState();
+  }
+  
+  public string getCurState(){
+    string curState = this.state.getCurState();
+    return this.state.getCurState();
+  }
+  
+  
+}
 
 
 
