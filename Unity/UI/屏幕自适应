@@ -1,0 +1,5 @@
+1）UI控件锚点自适应
+
+2）Canvas自适应，Scale with screen size,根据屏幕需要设置ReferenceResolution的值
+
+3）视口自适应
